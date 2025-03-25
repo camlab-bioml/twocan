@@ -10,7 +10,6 @@
 
 *A Bayesian optimization framework for multimodal registration of highly multiplexed single-cell spatial proteomics data*
 
-[Key Features](#key-features) | [Installation](#installation) | [Quick Start](#quick-start) | [Examples](#examples) | [Citation](#citation)
 
 </div>
 
