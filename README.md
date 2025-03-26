@@ -3,7 +3,7 @@
 
 
 
-<p align="center"><img src="https://github.com/user-attachments/assets/1cad2a1e-ca87-474e-96de-fd6b02560771" />
+<p align="center"><img src="https://github.com/user-attachments/assets/1cad2a1e-ca87-474e-96de-fd6b02560771" width=100px />
 </p>
 
 # Twocan
