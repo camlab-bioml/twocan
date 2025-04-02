@@ -10,6 +10,7 @@ from typing import List
 import spatialdata as sd
 from spatialdata.transformations import get_transformation, set_transformation
 from spatialdata.transformations.transformations import BaseTransformation, Sequence
+import pandas as pd
 
 
 def stretch_255(image: np.ndarray) -> np.ndarray:
@@ -229,3 +230,30 @@ def preprocess_imc(target_image: np.ndarray,
         target_image = target_image > binarization_threshold      
     #target_image = stretch_255(target_image)
     return target_image
+
+
+def pick_best_registration(study_df):
+    """Calculate triangle score and return best trial.
+    
+    Triangle score is calculated as:
+    0.5 * |norm_and * norm_corr + norm_corr * norm_iou + norm_iou * norm_and|
+    where each metric is normalized to [0,1] within the group.
+    
+    Args:
+        study_df: DataFrame containing trial results with columns:
+            - user_attrs_logical_and
+            - user_attrs_logical_iou
+            - user_attrs_reg_image_max_corr
+            
+    Returns:
+        DataFrame row containing the best trial based on triangle score
+    """
+    study_df['norm_and'] = (np.log10(study_df['user_attrs_logical_and']+1)) / (np.log10(study_df['user_attrs_logical_and']+1).max())
+    study_df['norm_iou'] = study_df['user_attrs_logical_iou'] / study_df['user_attrs_logical_iou'].max()
+    study_df['norm_corr'] = study_df['user_attrs_reg_image_max_corr'] / study_df['user_attrs_reg_image_max_corr'].max()
+    study_df['triangle_score'] = 0.5 * abs(study_df['norm_and'] * study_df['norm_corr'] + 
+                                        study_df['norm_corr'] * study_df['norm_iou'] + 
+                                        study_df['norm_iou'] * study_df['norm_and'])
+    # Get the row with maximum triangle score
+    best_row = study_df.loc[study_df['triangle_score'].idxmax()]
+    return best_row
