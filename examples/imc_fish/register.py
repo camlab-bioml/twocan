@@ -8,6 +8,7 @@ from skimage import transform
 import matplotlib.pyplot as plt
 from scipy.stats.mstats import winsorize
 from twocan import preprocess_if, preprocess_imc, multi_channel_corr, RegEstimator, get_merge, plot_cartoon_affine
+from twocan.utils import pick_best_registration
 from twocan.callbacks import SaveTrialsDFCallback
 
 FISH_scale = 0.2
@@ -116,20 +117,6 @@ def iou_single_objective(trial, source, target, registration_channels, preproces
         return 0
     else: 
         return trial.user_attrs['reg_image_max_corr'] * trial.user_attrs['logical_iou']
-
-
-def pick_best_registration(study_df):
-    study_df['norm_and'] = (np.log10(study_df['user_attrs_logical_and']+1)) / (np.log10(study_df['user_attrs_logical_and']+1).max())
-    study_df['norm_iou'] = study_df['user_attrs_logical_iou'] / study_df['user_attrs_logical_iou'].max()
-    study_df['norm_corr'] = study_df['user_attrs_reg_image_max_corr'] / study_df['user_attrs_reg_image_max_corr'].max()
-    study_df['triangle_score'] = 0.5 * abs(study_df['norm_and'] * study_df['norm_corr'] + 
-                                        study_df['norm_corr'] * study_df['norm_iou'] + 
-                                        study_df['norm_iou'] * study_df['norm_and'])
-    # Get the row with maximum triangle score
-    best_row = study_df.loc[study_df['triangle_score'].idxmax()]
-    return best_row
-
-
 
 
 if __name__ == '__main__':

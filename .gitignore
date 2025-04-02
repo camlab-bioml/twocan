@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.egg-info/
+dist/
+build/
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Project specific
+examples/imc_if/data/*
+examples/imc_if/.snakemake/ 
