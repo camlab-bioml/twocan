@@ -16,14 +16,16 @@
 ## 🛠️ Installation
 
 ```bash
+# Clone the repo
+git clone https://github.com/camlab-bioml/2025-twocan-cait.git
+cd 2025-twocan-cait
+
 # Create and activate conda environment
 conda env create -f environment.yml
 conda activate twocan
 
 # Install package
-pip install twocan
+pip install .
 ```
 
-## 🚀 Quick Start
-
-See `examples/`
+See `examples/` to get started
