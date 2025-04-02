@@ -1,0 +1,506 @@
+{
+    "metadata": {
+        ".zgroup": {
+            "zarr_format": 2
+        },
+        "images/.zgroup": {
+            "zarr_format": 2
+        },
+        "images/IF/.zattrs": {
+            "multiscales": [
+                {
+                    "axes": [
+                        {
+                            "name": "c",
+                            "type": "channel"
+                        },
+                        {
+                            "name": "y",
+                            "type": "space"
+                        },
+                        {
+                            "name": "x",
+                            "type": "space"
+                        }
+                    ],
+                    "coordinateTransformations": [
+                        {
+                            "input": {
+                                "axes": [
+                                    {
+                                        "name": "c",
+                                        "type": "channel"
+                                    },
+                                    {
+                                        "name": "y",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    },
+                                    {
+                                        "name": "x",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    }
+                                ],
+                                "name": "cyx"
+                            },
+                            "output": {
+                                "axes": [
+                                    {
+                                        "name": "c",
+                                        "type": "channel"
+                                    },
+                                    {
+                                        "name": "y",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    },
+                                    {
+                                        "name": "x",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    }
+                                ],
+                                "name": "global"
+                            },
+                            "type": "identity"
+                        }
+                    ],
+                    "datasets": [
+                        {
+                            "coordinateTransformations": [
+                                {
+                                    "scale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "type": "scale"
+                                }
+                            ],
+                            "path": "0"
+                        }
+                    ],
+                    "metadata": {
+                        "omero": {
+                            "channels": [
+                                {
+                                    "label": "DAPI"
+                                },
+                                {
+                                    "label": "Cy5"
+                                }
+                            ]
+                        }
+                    },
+                    "name": "/images/IF",
+                    "version": "0.4"
+                }
+            ],
+            "omero": {
+                "channels": [
+                    {
+                        "label": "DAPI"
+                    },
+                    {
+                        "label": "Cy5"
+                    }
+                ]
+            },
+            "spatialdata_attrs": {
+                "version": "0.1"
+            }
+        },
+        "images/IF/.zgroup": {
+            "zarr_format": 2
+        },
+        "images/IF/0/.zarray": {
+            "chunks": [
+                2,
+                1738,
+                3138
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dimension_separator": "/",
+            "dtype": "<f8",
+            "fill_value": 0.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                1738,
+                3138
+            ],
+            "zarr_format": 2
+        },
+        "images/IMC/.zattrs": {
+            "multiscales": [
+                {
+                    "axes": [
+                        {
+                            "name": "c",
+                            "type": "channel"
+                        },
+                        {
+                            "name": "y",
+                            "type": "space"
+                        },
+                        {
+                            "name": "x",
+                            "type": "space"
+                        }
+                    ],
+                    "coordinateTransformations": [
+                        {
+                            "input": {
+                                "axes": [
+                                    {
+                                        "name": "c",
+                                        "type": "channel"
+                                    },
+                                    {
+                                        "name": "y",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    },
+                                    {
+                                        "name": "x",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    }
+                                ],
+                                "name": "cyx"
+                            },
+                            "output": {
+                                "axes": [
+                                    {
+                                        "name": "c",
+                                        "type": "channel"
+                                    },
+                                    {
+                                        "name": "y",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    },
+                                    {
+                                        "name": "x",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    }
+                                ],
+                                "name": "global"
+                            },
+                            "type": "identity"
+                        },
+                        {
+                            "input": {
+                                "axes": [
+                                    {
+                                        "name": "c",
+                                        "type": "channel"
+                                    },
+                                    {
+                                        "name": "y",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    },
+                                    {
+                                        "name": "x",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    }
+                                ],
+                                "name": "cyx"
+                            },
+                            "output": {
+                                "axes": [
+                                    {
+                                        "name": "c",
+                                        "type": "channel"
+                                    },
+                                    {
+                                        "name": "x",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    },
+                                    {
+                                        "name": "y",
+                                        "type": "space",
+                                        "unit": "unit"
+                                    }
+                                ],
+                                "name": "aligned"
+                            },
+                            "transformations": [
+                                {
+                                    "input": {
+                                        "axes": [
+                                            {
+                                                "name": "c",
+                                                "type": "channel"
+                                            },
+                                            {
+                                                "name": "y",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            },
+                                            {
+                                                "name": "x",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            }
+                                        ],
+                                        "name": "cyx"
+                                    },
+                                    "output": {
+                                        "axes": [
+                                            {
+                                                "name": "c",
+                                                "type": "channel"
+                                            },
+                                            {
+                                                "name": "y",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            },
+                                            {
+                                                "name": "x",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            }
+                                        ],
+                                        "name": "global"
+                                    },
+                                    "type": "identity"
+                                },
+                                {
+                                    "affine": [
+                                        [
+                                            1.0,
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        [
+                                            0.0,
+                                            0.000858007086,
+                                            -1.00226191,
+                                            497.597982
+                                        ],
+                                        [
+                                            0.0,
+                                            -1.00226191,
+                                            -0.000858007086,
+                                            574.903114
+                                        ]
+                                    ],
+                                    "input": {
+                                        "axes": [
+                                            {
+                                                "name": "c",
+                                                "type": "channel"
+                                            },
+                                            {
+                                                "name": "y",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            },
+                                            {
+                                                "name": "x",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            }
+                                        ],
+                                        "name": "cyx"
+                                    },
+                                    "output": {
+                                        "axes": [
+                                            {
+                                                "name": "c",
+                                                "type": "channel"
+                                            },
+                                            {
+                                                "name": "x",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            },
+                                            {
+                                                "name": "y",
+                                                "type": "space",
+                                                "unit": "unit"
+                                            }
+                                        ],
+                                        "name": "global"
+                                    },
+                                    "type": "affine"
+                                }
+                            ],
+                            "type": "sequence"
+                        }
+                    ],
+                    "datasets": [
+                        {
+                            "coordinateTransformations": [
+                                {
+                                    "scale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "type": "scale"
+                                }
+                            ],
+                            "path": "0"
+                        }
+                    ],
+                    "metadata": {
+                        "omero": {
+                            "channels": [
+                                {
+                                    "label": "-"
+                                },
+                                {
+                                    "label": "-"
+                                },
+                                {
+                                    "label": "-"
+                                },
+                                {
+                                    "label": "-"
+                                },
+                                {
+                                    "label": "-"
+                                },
+                                {
+                                    "label": "BrdU"
+                                },
+                                {
+                                    "label": "RFP"
+                                },
+                                {
+                                    "label": "SPC_Abcam"
+                                },
+                                {
+                                    "label": "SPC_TFS"
+                                },
+                                {
+                                    "label": "CGRP"
+                                },
+                                {
+                                    "label": "Ki67"
+                                },
+                                {
+                                    "label": "CCSP_TFS_PAb"
+                                },
+                                {
+                                    "label": "CCSP_Abcam"
+                                },
+                                {
+                                    "label": "DNA1"
+                                },
+                                {
+                                    "label": "DNA2"
+                                },
+                                {
+                                    "label": "-"
+                                }
+                            ]
+                        }
+                    },
+                    "name": "/images/IMC",
+                    "version": "0.4"
+                }
+            ],
+            "omero": {
+                "channels": [
+                    {
+                        "label": "-"
+                    },
+                    {
+                        "label": "-"
+                    },
+                    {
+                        "label": "-"
+                    },
+                    {
+                        "label": "-"
+                    },
+                    {
+                        "label": "-"
+                    },
+                    {
+                        "label": "BrdU"
+                    },
+                    {
+                        "label": "RFP"
+                    },
+                    {
+                        "label": "SPC_Abcam"
+                    },
+                    {
+                        "label": "SPC_TFS"
+                    },
+                    {
+                        "label": "CGRP"
+                    },
+                    {
+                        "label": "Ki67"
+                    },
+                    {
+                        "label": "CCSP_TFS_PAb"
+                    },
+                    {
+                        "label": "CCSP_Abcam"
+                    },
+                    {
+                        "label": "DNA1"
+                    },
+                    {
+                        "label": "DNA2"
+                    },
+                    {
+                        "label": "-"
+                    }
+                ]
+            },
+            "spatialdata_attrs": {
+                "version": "0.1"
+            }
+        },
+        "images/IMC/.zgroup": {
+            "zarr_format": 2
+        },
+        "images/IMC/0/.zarray": {
+            "chunks": [
+                16,
+                343,
+                338
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dimension_separator": "/",
+            "dtype": "<f4",
+            "fill_value": 0.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                16,
+                343,
+                338
+            ],
+            "zarr_format": 2
+        }
+    },
+    "zarr_consolidated_format": 1
+}

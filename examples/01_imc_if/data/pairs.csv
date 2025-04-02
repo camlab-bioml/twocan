@@ -1,0 +1,3 @@
+zarr_id,registration_channels,correlation_channels,if_scale
+cell-line-0028-bd18455,DAPI DNA1 DNA2,GFP RFP,1.714
+tissue-0009-9073de4,DAPI DNA1 DNA2,Cy5 CGRP,0.325
