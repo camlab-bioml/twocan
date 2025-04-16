@@ -17,8 +17,8 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/camlab-bioml/2025-twocan-cait.git
-cd 2025-twocan-cait
+git clone https://github.com/camlab-bioml/twocan.git
+cd twocan
 
 # Create and activate conda environment
 conda env create -f environment.yml
