@@ -9,4 +9,4 @@ Features examples from the Twocan-954 dataset. Includes a Snakemake workflow dem
 Example workflow using published data from Schultz et al. 2018 to demonstrate paired IMC and FISH registration. Includes a basic script showing how to process and analyze the data.
 
 ## 3. IMS + IMC `03_ims_imc/`
-* Example workflow for IMS and IMC serial section registration
+Example workflow for IMS and IMC serial section registration
