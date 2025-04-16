@@ -19,3 +19,9 @@ python register.py
 
 python stat_fish.py
 ```
+
+## Result
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1ed05112-9af3-44f6-9a18-4dfa2c859e9b" width=500px />
+</p>
