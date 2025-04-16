@@ -1,4 +1,4 @@
-# Serial section IMS + IMC slides from Shanza Ayub
+# Serial section IMS + IMC slides
 
 Unpublished data, personal correspondance
 
