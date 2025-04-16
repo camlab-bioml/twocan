@@ -12,3 +12,9 @@ Bayesian Optimization for Multimodal Registration of Highly Multiplexed Single-C
 conda activate twocan
 snakemake -j 12 --use-conda 
 ```
+
+## Result
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5deec751-8bf3-43f6-8816-8a53f3e65e69" width=500px />
+</p>
+
