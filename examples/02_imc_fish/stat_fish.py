@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from tifffile import imread
 from register import FISH_scale
-from twocan import  RegEstimator, read_M
+from twocan import RegEstimator, read_M
 from twocan.utils import pick_best_registration
 from scipy.stats import spearmanr, pearsonr
 from scipy.io import loadmat
@@ -22,7 +22,7 @@ fish = np.stack([
    np.flipud(imread('data/PPIB_2/registered/Dapi_IF.tif')),
    np.flipud(imread('data/PPIB_2/registered/PPIB_RNA_IF.tif'))
 ])
-imc = np.stack([imread('data/PPIB_2/DNA2(Ir193Di).tiff'),imread('data/PPIB_2/C2_IMC_PPIB_10nM.tiff')[None,:,:]])
+imc = np.stack([imread('data/PPIB_2/DNA2(Ir193Di).tiff'),imread('data/PPIB_2/C2_IMC_PPIB_10nM.tiff')])
 mask = np.flipud(imread('data/PPIB_2/registered/Dapi_IF_Mask.tiff'))
 schultz_imc = np.stack([np.flipud(imread('data/PPIB_2/registered/DNA2_IMC.tif')),np.flipud(imread('data/PPIB_2/registered/PPIB_IMC.tif'))])
 
@@ -40,18 +40,20 @@ sum_schultz_1 = np.bincount(mask.ravel(), weights=schultz_imc[1,:,:].ravel())
 sum_fish_0 = np.bincount(mask.ravel(), weights=stack[2,:,:].ravel()) 
 sum_fish_1 = np.bincount(mask.ravel(), weights=stack[3,:,:].ravel()) 
 
+# exclude bin 0 (background)
+
 # correlation of total signal
-spearmanr(sum_imc_1, sum_fish_1)
-spearmanr(sum_schultz_1, sum_fish_1)
-pearsonr(sum_imc_1, sum_fish_1)
-pearsonr(sum_schultz_1, sum_fish_1)
+spearmanr(sum_imc_1[1:], sum_fish_1[1:])
+spearmanr(sum_schultz_1[1:], sum_fish_1[1:])
+pearsonr(sum_imc_1[1:], sum_fish_1[1:])
+pearsonr(sum_schultz_1[1:], sum_fish_1[1:])
 
 # correlation of mean signal
 counts = np.bincount(mask.ravel())
-spearmanr(sum_imc_1/counts, sum_fish_1/counts)
-spearmanr(sum_schultz_1/counts, sum_fish_1/counts)
-pearsonr(sum_imc_1/counts, sum_fish_1/counts)
-pearsonr(sum_schultz_1/counts, sum_fish_1/counts)
+spearmanr(sum_imc_1[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
+spearmanr(sum_schultz_1[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
+pearsonr(sum_imc_1[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
+pearsonr(sum_schultz_1[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
 
 # read in spots
 spots = pd.read_csv('results/rep2_deepcell_spots.csv')
@@ -63,11 +65,14 @@ spot_locations[spots['x'].round().astype(int), spots['y'].round().astype(int)] =
 # count the number of spots in each cell
 cell_counts = np.bincount(mask.ravel(), weights=spot_locations.ravel())
 
+cell_counts[1:].mean()
+np.median(cell_counts[1:])
+
 # correlation of RNA spots withh total ion counts
-spearmanr(sum_imc_1, cell_counts)
-spearmanr(sum_schultz_1, cell_counts)
-pearsonr(sum_imc_1, cell_counts)
-pearsonr(sum_schultz_1, cell_counts)
+spearmanr(sum_imc_1[1:], cell_counts[1:])
+spearmanr(sum_schultz_1[1:], cell_counts[1:])
+pearsonr(sum_imc_1[1:], cell_counts[1:])
+pearsonr(sum_schultz_1[1:], cell_counts[1:])
 
 
 ###############
@@ -99,17 +104,17 @@ sum_fish_0 = np.bincount(mask.ravel(), weights=stack[2,:,:].ravel())
 sum_fish_1 = np.bincount(mask.ravel(), weights=stack[3,:,:].ravel()) 
 
 # correlation of total signal
-spearmanr(sum_imc_1, sum_fish_1)
-spearmanr(sum_schultz_0, sum_fish_1)
-pearsonr(sum_imc_1, sum_fish_1)
-pearsonr(sum_schultz_0, sum_fish_1)
+spearmanr(sum_imc_1[1:], sum_fish_1[1:])
+spearmanr(sum_schultz_0[1:], sum_fish_1[1:])
+pearsonr(sum_imc_1[1:], sum_fish_1[1:])
+pearsonr(sum_schultz_0[1:], sum_fish_1[1:])
 
 # correlation of mean signal
 counts = np.bincount(mask.ravel())
-spearmanr(sum_imc_1/counts, sum_fish_1/counts)
-spearmanr(sum_schultz_0/counts, sum_fish_1/counts)
-pearsonr(sum_imc_1/counts, sum_fish_1/counts)
-pearsonr(sum_schultz_0/counts, sum_fish_1/counts)
+spearmanr(sum_imc_1[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
+spearmanr(sum_schultz_0[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
+pearsonr(sum_imc_1[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
+pearsonr(sum_schultz_0[1:]/counts[1:], sum_fish_1[1:]/counts[1:])
 
 # read in spots
 spots = pd.read_csv('results/rep3_deepcell_spots.csv')
@@ -120,9 +125,11 @@ spot_locations[spots['x'].round().astype(int), spots['y'].round().astype(int)] =
 
 # count the number of spots in each cell
 cell_counts = np.bincount(mask.ravel(), weights=spot_locations.ravel())
+cell_counts[1:].mean()
+np.median(cell_counts[1:])
 
 # correlation of RNA spots withh total ion counts
-spearmanr(sum_imc_1, cell_counts)
-spearmanr(sum_schultz_0, cell_counts)
-pearsonr(sum_imc_1, cell_counts)
-pearsonr(sum_schultz_0, cell_counts)
+spearmanr(sum_imc_1[1:], cell_counts[1:])
+spearmanr(sum_schultz_0[1:], cell_counts[1:])
+pearsonr(sum_imc_1[1:], cell_counts[1:])
+pearsonr(sum_schultz_0[1:], cell_counts[1:])
