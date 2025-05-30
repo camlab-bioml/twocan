@@ -1,0 +1,1123 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="twocan.RegEstimator" href="generated/twocan.RegEstimator.html" />
+    <link rel="prev" title="Quickstart: Basic Registration" href="../tutorials/01_quickstart_basic_registration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core Concepts</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.RegEstimator.html">twocan.RegEstimator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocessors">Preprocessors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.IFProcessor.html">twocan.IFProcessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.IMCProcessor.html">twocan.IMCProcessor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#optimization-functions">Optimization Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.iou_corr_single_objective.html">twocan.iou_corr_single_objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.iou_corr_multi_objective.html">twocan.iou_corr_multi_objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.registration_trial.html">twocan.registration_trial</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#callbacks">Callbacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.SaveTrialsDFCallback.html">twocan.SaveTrialsDFCallback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.ThresholdReachedCallback.html">twocan.ThresholdReachedCallback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.MatrixConvergenceCallback.html">twocan.MatrixConvergenceCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.stretch_255.html">twocan.stretch_255</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.read_M.html">twocan.read_M</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.multi_channel_corr.html">twocan.multi_channel_corr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.get_aligned_coordinates.html">twocan.get_aligned_coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.prep_zarr.html">twocan.prep_zarr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.pick_best_registration.html">twocan.pick_best_registration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting">Plotting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.plot_cartoon_affine.html">twocan.plot_cartoon_affine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/twocan.get_merge.html">twocan.get_merge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-twocan">Complete API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.IFProcessor"><code class="docutils literal notranslate"><span class="pre">IFProcessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IFProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">IFProcessor.binarize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IFProcessor.binarization_threshold"><code class="docutils literal notranslate"><span class="pre">IFProcessor.binarization_threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IFProcessor.sigma"><code class="docutils literal notranslate"><span class="pre">IFProcessor.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IFProcessor.configure"><code class="docutils literal notranslate"><span class="pre">IFProcessor.configure()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.IMCProcessor"><code class="docutils literal notranslate"><span class="pre">IMCProcessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.arcsinh_normalize"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.arcsinh_normalize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.arcsinh_cofactor"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.arcsinh_cofactor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.winsorize_limits"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.winsorize_limits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.binarize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.binarization_threshold"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.binarization_threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.sigma"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.IMCProcessor.configure"><code class="docutils literal notranslate"><span class="pre">IMCProcessor.configure()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.MatrixConvergenceCallback"><code class="docutils literal notranslate"><span class="pre">MatrixConvergenceCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.MatrixConvergenceCallback.window_size"><code class="docutils literal notranslate"><span class="pre">MatrixConvergenceCallback.window_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.MatrixConvergenceCallback.tolerance"><code class="docutils literal notranslate"><span class="pre">MatrixConvergenceCallback.tolerance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.MatrixConvergenceCallback.min_trials"><code class="docutils literal notranslate"><span class="pre">MatrixConvergenceCallback.min_trials</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.MatrixConvergenceCallback.matrices"><code class="docutils literal notranslate"><span class="pre">MatrixConvergenceCallback.matrices</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.RegEstimator"><code class="docutils literal notranslate"><span class="pre">RegEstimator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.M_"><code class="docutils literal notranslate"><span class="pre">RegEstimator.M_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.y_shape_"><code class="docutils literal notranslate"><span class="pre">RegEstimator.y_shape_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.fit"><code class="docutils literal notranslate"><span class="pre">RegEstimator.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.fit_transform"><code class="docutils literal notranslate"><span class="pre">RegEstimator.fit_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.score"><code class="docutils literal notranslate"><span class="pre">RegEstimator.score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.set_score_request"><code class="docutils literal notranslate"><span class="pre">RegEstimator.set_score_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.RegEstimator.transform"><code class="docutils literal notranslate"><span class="pre">RegEstimator.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.SaveTrialsDFCallback"><code class="docutils literal notranslate"><span class="pre">SaveTrialsDFCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.SaveTrialsDFCallback.filepath"><code class="docutils literal notranslate"><span class="pre">SaveTrialsDFCallback.filepath</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.SaveTrialsDFCallback.save_frequency"><code class="docutils literal notranslate"><span class="pre">SaveTrialsDFCallback.save_frequency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.SaveTrialsDFCallback.trial_count"><code class="docutils literal notranslate"><span class="pre">SaveTrialsDFCallback.trial_count</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.ThresholdReachedCallback"><code class="docutils literal notranslate"><span class="pre">ThresholdReachedCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.ThresholdReachedCallback.threshold"><code class="docutils literal notranslate"><span class="pre">ThresholdReachedCallback.threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.ThresholdReachedCallback.metric_name"><code class="docutils literal notranslate"><span class="pre">ThresholdReachedCallback.metric_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#twocan.ThresholdReachedCallback.direction"><code class="docutils literal notranslate"><span class="pre">ThresholdReachedCallback.direction</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.iou_corr_multi_objective"><code class="docutils literal notranslate"><span class="pre">iou_corr_multi_objective()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.iou_corr_single_objective"><code class="docutils literal notranslate"><span class="pre">iou_corr_single_objective()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.multi_channel_corr"><code class="docutils literal notranslate"><span class="pre">multi_channel_corr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.pick_best_registration"><code class="docutils literal notranslate"><span class="pre">pick_best_registration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.plot_cartoon_affine"><code class="docutils literal notranslate"><span class="pre">plot_cartoon_affine()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.prep_zarr"><code class="docutils literal notranslate"><span class="pre">prep_zarr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twocan.registration_trial"><code class="docutils literal notranslate"><span class="pre">registration_trial()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>This section provides detailed documentation for all Twocan classes and functions.</p>
+<section id="core-classes">
+<h2>Core Classes<a class="headerlink" href="#core-classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.RegEstimator" title="twocan.RegEstimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.RegEstimator</span></code></a>([...])</p></td>
+<td><p>A scikit-learn compatible estimator for multimodal image registration.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="preprocessors">
+<h2>Preprocessors<a class="headerlink" href="#preprocessors" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.IFProcessor" title="twocan.IFProcessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.IFProcessor</span></code></a>([binarize, ...])</p></td>
+<td><p>Preprocessing pipeline for Immunofluorescence (IF) images.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#twocan.IMCProcessor" title="twocan.IMCProcessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.IMCProcessor</span></code></a>([arcsinh_normalize, ...])</p></td>
+<td><p>Preprocessing pipeline for Imaging Mass Cytometry (IMC) images.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="optimization-functions">
+<h2>Optimization Functions<a class="headerlink" href="#optimization-functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.iou_corr_single_objective" title="twocan.iou_corr_single_objective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.iou_corr_single_objective</span></code></a>(trial, ...)</p></td>
+<td><p>Objective function that optimizes for IoU (Intersection over Union).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#twocan.iou_corr_multi_objective" title="twocan.iou_corr_multi_objective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.iou_corr_multi_objective</span></code></a>(trial, ...)</p></td>
+<td><p>Multi-objective function that optimizes for both correlation and IoU.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.registration_trial" title="twocan.registration_trial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.registration_trial</span></code></a>(trial, images, ...)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="callbacks">
+<h2>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.SaveTrialsDFCallback" title="twocan.SaveTrialsDFCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.SaveTrialsDFCallback</span></code></a>(filepath[, ...])</p></td>
+<td><p>Callback to save optimization trials to a CSV file during study execution.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#twocan.ThresholdReachedCallback" title="twocan.ThresholdReachedCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.ThresholdReachedCallback</span></code></a>(threshold[, ...])</p></td>
+<td><p>Callback to stop optimization when a target metric threshold is reached.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.MatrixConvergenceCallback" title="twocan.MatrixConvergenceCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.MatrixConvergenceCallback</span></code></a>([...])</p></td>
+<td><p>Callback to monitor transformation matrix convergence during optimization.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/twocan.stretch_255.html#twocan.stretch_255" title="twocan.stretch_255"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.stretch_255</span></code></a>(image)</p></td>
+<td><p>Convert an image to 8-bit grayscale by stretching its range to [0, 255].</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/twocan.read_M.html#twocan.read_M" title="twocan.read_M"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.read_M</span></code></a>(M)</p></td>
+<td><p>Parse a string representation of an affine transformation matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.multi_channel_corr" title="twocan.multi_channel_corr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.multi_channel_corr</span></code></a>(source, target)</p></td>
+<td><p>Calculate correlation coefficients between all pairs of channels from two images.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/twocan.get_aligned_coordinates.html#twocan.get_aligned_coordinates" title="twocan.get_aligned_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.get_aligned_coordinates</span></code></a>(...[, ...])</p></td>
+<td><p>Apply a transformation to align two spatial elements in a new coordinate system.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.prep_zarr" title="twocan.prep_zarr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.prep_zarr</span></code></a>(IF_arr, IMC_arr, IF_panel, ...)</p></td>
+<td><p>Create a SpatialData object from IF and IMC arrays with their channel panels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#twocan.pick_best_registration" title="twocan.pick_best_registration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.pick_best_registration</span></code></a>(study_df)</p></td>
+<td><p>Calculate triangle score and return best trial from optimization results.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="plotting">
+<h2>Plotting<a class="headerlink" href="#plotting" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#twocan.plot_cartoon_affine" title="twocan.plot_cartoon_affine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.plot_cartoon_affine</span></code></a>(w1, h1, M, w2, h2)</p></td>
+<td><p>Plot a cartoon representation of an affine transformation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/twocan.get_merge.html#twocan.get_merge" title="twocan.get_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twocan.get_merge</span></code></a>(source, target)</p></td>
+<td><p>Merge two images into a color-coded overlay.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-twocan">
+<span id="complete-api"></span><h2>Complete API<a class="headerlink" href="#module-twocan" title="Link to this heading"></a></h2>
+<p>Twocan: Bayesian optimization for multimodal registration of spatial proteomics.</p>
+<p>Twocan is a Python package that uses Bayesian optimization (via Optuna) to
+automatically find optimal parameters for registering images from
+spatial proteomics technologies such as IF (Immunofluorescence), IMC (Imaging
+Mass Cytometry), FISH, IMS, etc.</p>
+<p>The package provides:
+- Automated parameter optimization for preprocessing and registration
+- Modality-specific preprocessing functions
+- Quality metrics for registration assessment
+- Visualization tools for registration results
+- Extensible design for custom objectives and preprocessors</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="twocan.IFProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">IFProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binarize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binarization_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/utils.html#IFProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.IFProcessor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Preprocessing pipeline for Immunofluorescence (IF) images.</p>
+<p>This class provides a standardized preprocessing pipeline for IF images
+including channel summation, normalization, Gaussian blurring, and optional
+binarization. The processor can be configured with trial parameters from
+Optuna optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>binarize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>default=True</em>) – Whether to apply binarization after preprocessing.</p></li>
+<li><p><strong>binarization_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=0.1</em>) – Threshold value for binarization (0-1 range after normalization).</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=1</em>) – Standard deviation for Gaussian blur kernel.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IFProcessor.binarize">
+<span class="sig-name descname"><span class="pre">binarize</span></span><a class="headerlink" href="#twocan.IFProcessor.binarize" title="Link to this definition"></a></dt>
+<dd><p>Whether binarization is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IFProcessor.binarization_threshold">
+<span class="sig-name descname"><span class="pre">binarization_threshold</span></span><a class="headerlink" href="#twocan.IFProcessor.binarization_threshold" title="Link to this definition"></a></dt>
+<dd><p>Current binarization threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IFProcessor.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#twocan.IFProcessor.sigma" title="Link to this definition"></a></dt>
+<dd><p>Current Gaussian blur sigma value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.IFProcessor.configure">
+<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/utils.html#IFProcessor.configure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.IFProcessor.configure" title="Link to this definition"></a></dt>
+<dd><p>Configure processor parameters from Optuna trial parameters.</p>
+<p>This method updates the processor parameters based on values suggested
+by an Optuna trial. It looks for specific parameter names in the trial
+params dictionary and updates the corresponding attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>trial_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary of trial parameters from Optuna optimization.
+Expected keys: ‘IF_binarization_threshold’, ‘IF_gaussian_sigma’,
+‘binarize_images’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – Returns self for method chaining.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#twocan.IFProcessor" title="twocan.IFProcessor">IFProcessor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="twocan.IMCProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">IMCProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arcsinh_normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arcsinh_cofactor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winsorize_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binarize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binarization_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/utils.html#IMCProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.IMCProcessor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Preprocessing pipeline for Imaging Mass Cytometry (IMC) images.</p>
+<p>This class provides a comprehensive preprocessing pipeline specifically
+designed for IMC images, including arcsinh transformation for variance
+stabilization, winsorization for outlier handling, normalization,
+Gaussian blurring, and optional binarization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arcsinh_normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>default=True</em>) – Whether to apply arcsinh transformation for variance stabilization.</p></li>
+<li><p><strong>arcsinh_cofactor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=5</em>) – Cofactor for arcsinh transformation. Lower values increase the
+transformation strength.</p></li>
+<li><p><strong>winsorize_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=</em><em>[</em><em>None</em><em>, </em><em>None</em><em>]</em>) – Lower and upper percentile limits for winsorization.
+[0.01, 0.01] means clip bottom 1% and top 1% of values.</p></li>
+<li><p><strong>binarize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>default=True</em>) – Whether to apply binarization after preprocessing.</p></li>
+<li><p><strong>binarization_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=2</em>) – Threshold value for binarization.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=1</em>) – Standard deviation for Gaussian blur kernel.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.arcsinh_normalize">
+<span class="sig-name descname"><span class="pre">arcsinh_normalize</span></span><a class="headerlink" href="#twocan.IMCProcessor.arcsinh_normalize" title="Link to this definition"></a></dt>
+<dd><p>Whether arcsinh transformation is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.arcsinh_cofactor">
+<span class="sig-name descname"><span class="pre">arcsinh_cofactor</span></span><a class="headerlink" href="#twocan.IMCProcessor.arcsinh_cofactor" title="Link to this definition"></a></dt>
+<dd><p>Current arcsinh cofactor value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.winsorize_limits">
+<span class="sig-name descname"><span class="pre">winsorize_limits</span></span><a class="headerlink" href="#twocan.IMCProcessor.winsorize_limits" title="Link to this definition"></a></dt>
+<dd><p>Current winsorization limits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.binarize">
+<span class="sig-name descname"><span class="pre">binarize</span></span><a class="headerlink" href="#twocan.IMCProcessor.binarize" title="Link to this definition"></a></dt>
+<dd><p>Whether binarization is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.binarization_threshold">
+<span class="sig-name descname"><span class="pre">binarization_threshold</span></span><a class="headerlink" href="#twocan.IMCProcessor.binarization_threshold" title="Link to this definition"></a></dt>
+<dd><p>Current binarization threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#twocan.IMCProcessor.sigma" title="Link to this definition"></a></dt>
+<dd><p>Current Gaussian blur sigma value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>The arcsinh transformation is particularly useful for IMC data because it
+stabilizes variance across the intensity range, which is important for
+count-based mass spectrometry data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.IMCProcessor.configure">
+<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/utils.html#IMCProcessor.configure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.IMCProcessor.configure" title="Link to this definition"></a></dt>
+<dd><p>Configure processor parameters from Optuna trial parameters.</p>
+<p>This method updates the processor parameters based on values suggested
+by an Optuna trial. It looks for specific IMC parameter names in the
+trial params dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>trial_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary of trial parameters from Optuna optimization.
+Expected keys: ‘IMC_arcsinh_normalize’, ‘IMC_arcsinh_cofactor’,
+‘IMC_winsorization_lower_limit’, ‘IMC_winsorization_upper_limit’,
+‘IMC_binarization_threshold’, ‘IMC_gaussian_sigma’, ‘binarize_images’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – Returns self for method chaining.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#twocan.IMCProcessor" title="twocan.IMCProcessor">IMCProcessor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="twocan.MatrixConvergenceCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">MatrixConvergenceCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_trials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/callbacks.html#MatrixConvergenceCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.MatrixConvergenceCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Callback to monitor transformation matrix convergence during optimization.</p>
+<p>This callback tracks the transformation matrices from recent trials and
+stops optimization when they converge (have low variance), indicating
+that the registration has stabilized. Useful for detecting when further
+optimization is unlikely to improve results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>default=10</em>) – Number of recent trials to consider for convergence assessment.</p></li>
+<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=0.01</em>) – Maximum allowed variance in matrix elements for convergence.
+Lower values require tighter convergence.</p></li>
+<li><p><strong>min_trials</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>default=20</em>) – Minimum number of trials before convergence checking begins.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.MatrixConvergenceCallback.window_size">
+<span class="sig-name descname"><span class="pre">window_size</span></span><a class="headerlink" href="#twocan.MatrixConvergenceCallback.window_size" title="Link to this definition"></a></dt>
+<dd><p>Current window size for convergence assessment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.MatrixConvergenceCallback.tolerance">
+<span class="sig-name descname"><span class="pre">tolerance</span></span><a class="headerlink" href="#twocan.MatrixConvergenceCallback.tolerance" title="Link to this definition"></a></dt>
+<dd><p>Current tolerance for matrix element variance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.MatrixConvergenceCallback.min_trials">
+<span class="sig-name descname"><span class="pre">min_trials</span></span><a class="headerlink" href="#twocan.MatrixConvergenceCallback.min_trials" title="Link to this definition"></a></dt>
+<dd><p>Minimum trials before convergence checking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.MatrixConvergenceCallback.matrices">
+<span class="sig-name descname"><span class="pre">matrices</span></span><a class="headerlink" href="#twocan.MatrixConvergenceCallback.matrices" title="Link to this definition"></a></dt>
+<dd><p>List storing recent transformation matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="twocan.RegEstimator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">RegEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registration_max_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registration_percentile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/base.html#RegEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.RegEstimator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="(in scikit-learn v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></a>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>A scikit-learn compatible estimator for multimodal image registration.</p>
+<p>This class implements feature-based image registration using OpenCV’s ORB
+(Oriented FAST and Rotated BRIEF) detector and a partial affine transformation
+model. It follows scikit-learn’s estimator API with fit, transform, and
+fit_transform methods, making it easy to integrate into machine learning pipelines.</p>
+<p>The registration process consists of:
+1. Feature detection using ORB on both images
+2. Feature matching using brute-force Hamming distance
+3. Affine transformation estimation using RANSAC
+4. Image transformation using the estimated parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>registration_max_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>default=10000</em>) – Maximum number of features to detect in each image using ORB.
+Higher values can improve registration accuracy but increase computation time.</p></li>
+<li><p><strong>registration_percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default=0.9</em>) – Percentile of features to keep after sorting by match quality (0-1).
+Only the top percentile of matches by distance are used for transformation
+estimation, which helps remove outliers.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.RegEstimator.M_">
+<span class="sig-name descname"><span class="pre">M_</span></span><a class="headerlink" href="#twocan.RegEstimator.M_" title="Link to this definition"></a></dt>
+<dd><p>The estimated 2x3 affine transformation matrix after fitting.
+Shape is (2, 3) representing the transformation [R|t] where R is
+rotation/scaling and t is translation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.RegEstimator.y_shape_">
+<span class="sig-name descname"><span class="pre">y_shape_</span></span><a class="headerlink" href="#twocan.RegEstimator.y_shape_" title="Link to this definition"></a></dt>
+<dd><p>Shape (height, width) of the target image used during fitting.
+Used as the default output shape for transformations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>The estimator automatically converts input images to 8-bit grayscale for
+feature detection using the stretch_255 utility function. This ensures
+consistent feature detection regardless of input image dynamic range.</p>
+<p>The partial affine transformation model allows rotation, scaling, and
+translation but not shearing, which is appropriate for most microscopy
+registration tasks where imaging geometry is approximately preserved.</p>
+<p>For best results:
+- Ensure sufficient overlap between images
+- Use images with distinct features (not uniform regions)
+- Consider preprocessing to enhance relevant structures
+- Adjust max_features based on image complexity and computational budget</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.RegEstimator.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#twocan.RegEstimator" title="twocan.base.RegEstimator"><span class="pre">RegEstimator</span></a></span></span><a class="reference internal" href="../_modules/twocan/base.html#RegEstimator.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.RegEstimator.fit" title="Link to this definition"></a></dt>
+<dd><p>Estimate the affine transformation matrix between source (X) and target (y) images.</p>
+<p>This method detects features in both images using ORB, matches them, and
+estimates the best affine transformation that maps source features to
+target features using OpenCV’s robust estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Source image to be registered. Shape can be (H, W) for single-channel
+or (C, H, W) for multi-channel. If multi-channel, all channels are
+summed for feature detection.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Target (reference) image to register to. Shape can be (H, W) for
+single-channel or (C, H, W) for multi-channel. If multi-channel,
+all channels are summed for feature detection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – The fitted estimator with estimated transformation matrix in <code class="docutils literal notranslate"><span class="pre">self.M_</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#twocan.RegEstimator" title="twocan.RegEstimator">RegEstimator</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>cv2.error</strong> – If affine transformation cannot be estimated, typically due to
+    insufficient or poorly matched features.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The fitting process:
+1. Convert images to 8-bit for ORB compatibility
+2. Detect up to max_features keypoints in each image
+3. Compute ORB descriptors for each keypoint
+4. Match descriptors using brute-force Hamming distance
+5. Keep top percentile of matches by distance
+6. Estimate partial affine transformation using RANSAC</p>
+<p>The method uses OpenCV’s estimateAffinePartial2D which finds the optimal
+similarity transformation (rotation, scaling, translation) rather than
+a full affine transformation. This is more robust for most registration
+scenarios.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.RegEstimator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/twocan/base.html#RegEstimator.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.RegEstimator.fit_transform" title="Link to this definition"></a></dt>
+<dd><p>Fit to data, then transform it.</p>
+<p>This convenience method combines fitting and transformation in a single
+call. It’s equivalent to calling fit(X, y).transform(X, y) but slightly
+more efficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Source image to fit the transformation to and then transform.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Target image to fit the transformation against. This image will
+also be included in the output stack.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Stacked array containing the transformed X channels followed by
+the original y channels. Shape is (C_x + C_y, H_y, W_y) where
+C_x, C_y are the channel counts and H_y, W_y are target dimensions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.RegEstimator.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/twocan/base.html#RegEstimator.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.RegEstimator.score" title="Link to this definition"></a></dt>
+<dd><p>Calculate registration quality metrics between source and target images.</p>
+<p>This method computes various metrics to assess the quality of registration
+between binary or continuous-valued images. Metrics are calculated only
+in regions where both images have valid data after transformation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>np.ndarray</em>) – Source image, shape (H, W). Should be the same image used for fitting
+or a similar image from the same modality.</p></li>
+<li><p><strong>target</strong> (<em>np.ndarray</em>) – Target image, shape (H, W). Should be the same image used for fitting
+or a similar image from the same modality.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>Dictionary containing registration quality metrics:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>’and’<span class="classifier">float</span></dt><dd><p>Count of pixels where both source and target are positive
+(logical AND operation). Higher values indicate better overlap.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>’or’<span class="classifier">float</span></dt><dd><p>Count of pixels where either source or target is positive
+(logical OR operation).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>’xor’<span class="classifier">float</span></dt><dd><p>Count of pixels where source and target disagree
+(logical XOR operation). Lower values indicate better agreement.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>’iou’<span class="classifier">float</span></dt><dd><p>Intersection over Union ratio (and/or). Values range from 0-1
+with 1 indicating perfect overlap. Returns 0.0 if no positive pixels exist.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>’source_sum’<span class="classifier">float</span></dt><dd><p>Sum of all source pixel intensities in the overlap region.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>’target_sum’<span class="classifier">float</span></dt><dd><p>Sum of all target pixel intensities in the overlap region.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Metrics are computed only in the intersection region where both images
+have valid data after transformation. This ensures fair comparison and
+avoids edge effects from the transformation.</p>
+<p>For binary images, the metrics have intuitive interpretations:
+- IoU is the standard Jaccard index
+- ‘and’ counts overlapping positive pixels
+- ‘xor’ counts disagreement pixels</p>
+<p>For continuous images, the logical operations are applied after
+implicit conversion to boolean (non-zero values are True).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.RegEstimator.set_score_request">
+<span class="sig-name descname"><span class="pre">set_score_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#twocan.RegEstimator" title="twocan.base.RegEstimator"><span class="pre">RegEstimator</span></a></span></span><a class="headerlink" href="#twocan.RegEstimator.set_score_request" title="Link to this definition"></a></dt>
+<dd><p>Request metadata passed to the <code class="docutils literal notranslate"><span class="pre">score</span></code> method.</p>
+<p>Note that this method is only relevant if
+<code class="docutils literal notranslate"><span class="pre">enable_metadata_routing=True</span></code> (see <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.set_config.html#sklearn.set_config" title="(in scikit-learn v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.set_config()</span></code></a>).
+Please see <a class="reference external" href="https://scikit-learn.org/stable/metadata_routing.html#metadata-routing" title="(in scikit-learn v1.6)"><span class="xref std std-ref">User Guide</span></a> on how the routing
+mechanism works.</p>
+<p>The options for each parameter are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: metadata is requested, and passed to <code class="docutils literal notranslate"><span class="pre">score</span></code> if provided. The request is ignored if metadata is not provided.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code>: metadata is not requested and the meta-estimator will not pass it to <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: metadata is not requested, and the meta-estimator will raise an error if the user provides it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: metadata should be passed to the meta-estimator with this given alias instead of the original name.</p></li>
+</ul>
+<p>The default (<code class="docutils literal notranslate"><span class="pre">sklearn.utils.metadata_routing.UNCHANGED</span></code>) retains the
+existing request. This allows you to change the request for some
+parameters and not others.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is only relevant if this estimator is used as a
+sub-estimator of a meta-estimator, e.g. used inside a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="(in scikit-learn v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></a>. Otherwise it has no effect.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>True</em><em>, </em><em>False</em><em>, or </em><em>None</em><em>,                     </em><em>default=sklearn.utils.metadata_routing.UNCHANGED</em>) – Metadata routing for <code class="docutils literal notranslate"><span class="pre">source</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>True</em><em>, </em><em>False</em><em>, or </em><em>None</em><em>,                     </em><em>default=sklearn.utils.metadata_routing.UNCHANGED</em>) – Metadata routing for <code class="docutils literal notranslate"><span class="pre">target</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – The updated object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)">object</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="twocan.RegEstimator.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/twocan/base.html#RegEstimator.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.RegEstimator.transform" title="Link to this definition"></a></dt>
+<dd><p>Apply the estimated transformation to the source image(s).</p>
+<p>This method transforms the source image(s) using the affine transformation
+estimated during fitting. Optionally, a target image can be provided which
+will be stacked with the transformed source without transformation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Source image(s) to transform. Shape can be (H, W) for single-channel
+or (C, H, W) for multi-channel. All channels are transformed using
+the same transformation matrix.</p></li>
+<li><p><strong>y</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em><em>, </em><em>default=None</em>) – Target image to stack with transformed source. If provided, this image
+is NOT transformed but is included in the output for direct comparison.
+Shape should be (H, W) or (C, H, W).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed image(s). If y is None, returns transformed X with shape
+(C, H_out, W_out) where H_out, W_out match the target image from fitting.
+If y is provided, returns stacked array with transformed X channels
+followed by untransformed y channels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>NotFittedError</strong> – If transform is called before fitting the estimator.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – If the stored transformation matrix has invalid shape.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The transformation uses scikit-image’s warp function with the inverse
+transformation matrix. This ensures proper interpolation and handles
+edge cases automatically.</p>
+<p>Output image dimensions match the target image used during fitting
+unless a different y image is provided during transformation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="twocan.SaveTrialsDFCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">SaveTrialsDFCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_frequency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/callbacks.html#SaveTrialsDFCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.SaveTrialsDFCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Callback to save optimization trials to a CSV file during study execution.</p>
+<p>This callback writes trial results to a CSV file after each trial completion,
+allowing for real-time monitoring and persistent storage of optimization
+progress. Useful for long-running optimizations or when resuming studies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Path to the CSV file where trial data will be saved.
+File will be created if it doesn’t exist.</p></li>
+<li><p><strong>save_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>default=1</em>) – Number of trials between saves. Set to 1 to save after every trial,
+higher values for less frequent saves to reduce I/O overhead.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.SaveTrialsDFCallback.filepath">
+<span class="sig-name descname"><span class="pre">filepath</span></span><a class="headerlink" href="#twocan.SaveTrialsDFCallback.filepath" title="Link to this definition"></a></dt>
+<dd><p>Current filepath for saving trial data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.SaveTrialsDFCallback.save_frequency">
+<span class="sig-name descname"><span class="pre">save_frequency</span></span><a class="headerlink" href="#twocan.SaveTrialsDFCallback.save_frequency" title="Link to this definition"></a></dt>
+<dd><p>Current save frequency setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.SaveTrialsDFCallback.trial_count">
+<span class="sig-name descname"><span class="pre">trial_count</span></span><a class="headerlink" href="#twocan.SaveTrialsDFCallback.trial_count" title="Link to this definition"></a></dt>
+<dd><p>Internal counter tracking number of completed trials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="twocan.ThresholdReachedCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">ThresholdReachedCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'iou'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'maximize'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/callbacks.html#ThresholdReachedCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.ThresholdReachedCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Callback to stop optimization when a target metric threshold is reached.</p>
+<p>This callback monitors a specified metric during optimization and raises
+optuna.TrialPruned to stop the study when the threshold is reached. Useful
+for stopping optimization early when satisfactory results are achieved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Target threshold value for the monitored metric.</p></li>
+<li><p><strong>metric_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>default='iou'</em>) – Name of the metric to monitor in trial.user_attrs.
+Must be a key present in the user attributes of trials.</p></li>
+<li><p><strong>direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>default='maximize'</em>) – Whether to stop when metric goes ‘above’ (‘maximize’) or ‘below’
+(‘minimize’) the threshold.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.ThresholdReachedCallback.threshold">
+<span class="sig-name descname"><span class="pre">threshold</span></span><a class="headerlink" href="#twocan.ThresholdReachedCallback.threshold" title="Link to this definition"></a></dt>
+<dd><p>Current threshold value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.ThresholdReachedCallback.metric_name">
+<span class="sig-name descname"><span class="pre">metric_name</span></span><a class="headerlink" href="#twocan.ThresholdReachedCallback.metric_name" title="Link to this definition"></a></dt>
+<dd><p>Current metric being monitored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="twocan.ThresholdReachedCallback.direction">
+<span class="sig-name descname"><span class="pre">direction</span></span><a class="headerlink" href="#twocan.ThresholdReachedCallback.direction" title="Link to this definition"></a></dt>
+<dd><p>Current direction (‘maximize’ or ‘minimize’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.iou_corr_multi_objective">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">iou_corr_multi_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registration_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image='IMC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_image='IF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_preprocesser=&lt;twocan.utils.IMCProcessor</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_preprocesser=&lt;twocan.utils.IFProcessor</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/optimize.html#iou_corr_multi_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.iou_corr_multi_objective" title="Link to this definition"></a></dt>
+<dd><p>Multi-objective function that optimizes for both correlation and IoU.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.iou_corr_single_objective">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">iou_corr_single_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registration_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image='IMC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_image='IF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_preprocesser=&lt;twocan.utils.IMCProcessor</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_preprocesser=&lt;twocan.utils.IFProcessor</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/optimize.html#iou_corr_single_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.iou_corr_single_objective" title="Link to this definition"></a></dt>
+<dd><p>Objective function that optimizes for IoU (Intersection over Union).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.multi_channel_corr">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">multi_channel_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/twocan/utils.html#multi_channel_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.multi_channel_corr" title="Link to this definition"></a></dt>
+<dd><p>Calculate correlation coefficients between all pairs of channels from two images.</p>
+<p>This function computes the Pearson correlation coefficient between every
+channel in the source image and every channel in the target image. The
+images are first normalized (z-scored) channel-wise before correlation
+calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>np.ndarray</em>) – Source image array of shape (n_channels_1, n_pixels).
+Each row represents a flattened channel.</p></li>
+<li><p><strong>target</strong> (<em>np.ndarray</em>) – Target image array of shape (n_channels_2, n_pixels).
+Each row represents a flattened channel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Correlation matrix of shape (n_channels_1, n_channels_2).
+Element (i, j) contains the correlation between source channel i
+and target channel j.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function assumes the input arrays have the same number of pixels
+(same second dimension). Channels are normalized to have zero mean
+and unit standard deviation before correlation calculation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.pick_best_registration">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">pick_best_registration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/utils.html#pick_best_registration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.pick_best_registration" title="Link to this definition"></a></dt>
+<dd><p>Calculate triangle score and return best trial from optimization results.</p>
+<p>This function implements a balanced scoring approach for selecting the best
+registration trial from a set of optimization results. It combines three
+key metrics (logical AND, IoU, and correlation) using a triangular scoring
+scheme that balances all three aspects of registration quality.</p>
+<p>The triangle score is calculated as:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(1/3) * |norm_and * norm_corr + norm_corr * norm_iou + norm_iou * norm_and|
+</pre></div>
+</div>
+<p>where each metric is normalized to [0,1] within the group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>study_df</strong> (<em>pd.DataFrame</em>) – DataFrame containing trial results with required columns:
+- ‘user_attrs_logical_and’: Logical AND overlap between images
+- ‘user_attrs_logical_iou’: Intersection over Union score
+- ‘user_attrs_reg_image_max_corr’: Maximum correlation between channels</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame row containing the trial with the highest balanced score.
+The returned series includes all original columns plus computed
+normalization columns and the final ‘balanced_score’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The logical AND values are log-transformed before normalization because
+they typically span several orders of magnitude. The triangle score
+approach ensures that no single metric dominates the selection, leading
+to more robust registration quality assessment.</p>
+<p>Missing or NaN values in any of the required columns will result in
+NaN normalized scores, which may affect the final ranking.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.plot_cartoon_affine">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">plot_cartoon_affine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">w2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'green'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'purple'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Axes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Line2D</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/twocan/plotting.html#plot_cartoon_affine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.plot_cartoon_affine" title="Link to this definition"></a></dt>
+<dd><p>Plot a cartoon representation of an affine transformation.</p>
+<p>Visualizes how a rectangle is transformed by an affine matrix, useful for
+understanding registration transformations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>w1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Width and height of source rectangle.</p></li>
+<li><p><strong>h1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Width and height of source rectangle.</p></li>
+<li><p><strong>M</strong> (<em>np.ndarray</em>) – 2x3 affine transformation matrix.</p></li>
+<li><p><strong>w2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Width and height of target rectangle.</p></li>
+<li><p><strong>h2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Width and height of target rectangle.</p></li>
+<li><p><strong>ax</strong> (<em>Optional</em><em>[</em><em>Axes</em><em>]</em><em>, </em><em>default=None</em>) – Matplotlib axes for plotting. If None, current axes will be used.</p></li>
+<li><p><strong>show_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>default=False</em>) – Whether to show the original source rectangle.</p></li>
+<li><p><strong>source_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>default='green'</em>) – Color for source rectangle and its transformation.</p></li>
+<li><p><strong>target_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>default='purple'</em>) – Color for target rectangle.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib axes object and list of plotted lines.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Axes, List[Line2D]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.prep_zarr">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">prep_zarr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">IF_arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">IMC_arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">IF_panel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IMC_panel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SpatialData</span></span></span><a class="reference internal" href="../_modules/twocan/utils.html#prep_zarr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.prep_zarr" title="Link to this definition"></a></dt>
+<dd><p>Create a SpatialData object from IF and IMC arrays with their channel panels.</p>
+<p>This function takes raw image arrays and their corresponding channel names
+to create a properly formatted SpatialData object containing both modalities.
+The function handles both 2D and 3D input arrays, automatically adding a
+channel dimension if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>IF_arr</strong> (<em>np.ndarray</em>) – Immunofluorescence array of shape (H, W) or (C, H, W).
+If 2D, will be expanded to (1, H, W).</p></li>
+<li><p><strong>IMC_arr</strong> (<em>np.ndarray</em>) – Imaging mass cytometry array of shape (H, W) or (C, H, W).
+If 2D, will be expanded to (1, H, W).</p></li>
+<li><p><strong>IF_panel</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of channel names for IF data. Must match the number of channels
+in IF_arr.</p></li>
+<li><p><strong>IMC_panel</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of channel names for IMC data. Must match the number of channels
+in IMC_arr.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SpatialData object containing both modalities with proper channel
+information and coordinate systems.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sd.SpatialData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="twocan.registration_trial">
+<span class="sig-prename descclassname"><span class="pre">twocan.</span></span><span class="sig-name descname"><span class="pre">registration_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registration_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image='IMC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_image='IF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_preprocessor=&lt;twocan.utils.IMCProcessor</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static_preprocessor=&lt;twocan.utils.IFProcessor</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twocan/optimize.html#registration_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#twocan.registration_trial" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials/01_quickstart_basic_registration.html" class="btn btn-neutral float-left" title="Quickstart: Basic Registration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/twocan.RegEstimator.html" class="btn btn-neutral float-right" title="twocan.RegEstimator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

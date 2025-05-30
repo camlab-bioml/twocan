@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>twocan.callbacks &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Core Concepts</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">twocan.callbacks</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for twocan.callbacks</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">optuna</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="SaveTrialsDFCallback">
+<a class="viewcode-back" href="../../api/index.html#twocan.SaveTrialsDFCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SaveTrialsDFCallback</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback to save optimization trials to a CSV file during study execution.</span>
+<span class="sd">    </span>
+<span class="sd">    This callback writes trial results to a CSV file after each trial completion,</span>
+<span class="sd">    allowing for real-time monitoring and persistent storage of optimization</span>
+<span class="sd">    progress. Useful for long-running optimizations or when resuming studies.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : str</span>
+<span class="sd">        Path to the CSV file where trial data will be saved.</span>
+<span class="sd">        File will be created if it doesn&#39;t exist.</span>
+<span class="sd">    save_frequency : int, default=1</span>
+<span class="sd">        Number of trials between saves. Set to 1 to save after every trial,</span>
+<span class="sd">        higher values for less frequent saves to reduce I/O overhead.</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : str</span>
+<span class="sd">        Current filepath for saving trial data.</span>
+<span class="sd">    save_frequency : int</span>
+<span class="sd">        Current save frequency setting.</span>
+<span class="sd">    trial_count : int</span>
+<span class="sd">        Internal counter tracking number of completed trials.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_frequency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_frequency</span> <span class="o">=</span> <span class="n">save_frequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trial_count</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Study</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save study trials to CSV file.</span>
+<span class="sd">        </span>
+<span class="sd">        This method is called by Optuna after each trial completion.</span>
+<span class="sd">        It converts the study&#39;s trial data to a DataFrame and saves it</span>
+<span class="sd">        to the specified CSV file.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        study : optuna.Study</span>
+<span class="sd">            The Optuna study object containing all trials.</span>
+<span class="sd">        trial : optuna.Trial</span>
+<span class="sd">            The just-completed trial (not directly used but required</span>
+<span class="sd">            by Optuna&#39;s callback interface).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trial_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_count</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frequency</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">trials_dataframe</span><span class="p">()</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ThresholdReachedCallback">
+<a class="viewcode-back" href="../../api/index.html#twocan.ThresholdReachedCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ThresholdReachedCallback</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback to stop optimization when a target metric threshold is reached.</span>
+<span class="sd">    </span>
+<span class="sd">    This callback monitors a specified metric during optimization and raises</span>
+<span class="sd">    optuna.TrialPruned to stop the study when the threshold is reached. Useful</span>
+<span class="sd">    for stopping optimization early when satisfactory results are achieved.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    threshold : float</span>
+<span class="sd">        Target threshold value for the monitored metric.</span>
+<span class="sd">    metric_name : str, default=&#39;iou&#39;</span>
+<span class="sd">        Name of the metric to monitor in trial.user_attrs.</span>
+<span class="sd">        Must be a key present in the user attributes of trials.</span>
+<span class="sd">    direction : str, default=&#39;maximize&#39;</span>
+<span class="sd">        Whether to stop when metric goes &#39;above&#39; (&#39;maximize&#39;) or &#39;below&#39; </span>
+<span class="sd">        (&#39;minimize&#39;) the threshold.</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    threshold : float</span>
+<span class="sd">        Current threshold value.</span>
+<span class="sd">    metric_name : str</span>
+<span class="sd">        Current metric being monitored.</span>
+<span class="sd">    direction : str</span>
+<span class="sd">        Current direction (&#39;maximize&#39; or &#39;minimize&#39;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;iou&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;maximize&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span> <span class="o">=</span> <span class="n">metric_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Study</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if threshold has been reached and stop study if so.</span>
+<span class="sd">        </span>
+<span class="sd">        This method is called after each trial. It checks if the specified</span>
+<span class="sd">        metric has reached the threshold and raises TrialPruned to stop</span>
+<span class="sd">        the optimization if the condition is met.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        study : optuna.Study</span>
+<span class="sd">            The Optuna study object.</span>
+<span class="sd">        trial : optuna.Trial</span>
+<span class="sd">            The just-completed trial containing the metric value.</span>
+<span class="sd">            </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        optuna.TrialPruned</span>
+<span class="sd">            When the threshold condition is met, stopping the optimization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span> <span class="ow">in</span> <span class="n">trial</span><span class="o">.</span><span class="n">user_attrs</span><span class="p">:</span>
+            <span class="n">metric_value</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">user_attrs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;maximize&#39;</span> <span class="ow">and</span> <span class="n">metric_value</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Threshold reached: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">metric_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> &gt;= </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">optuna</span><span class="o">.</span><span class="n">TrialPruned</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;minimize&#39;</span> <span class="ow">and</span> <span class="n">metric_value</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Threshold reached: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">metric_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> &lt;= </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">optuna</span><span class="o">.</span><span class="n">TrialPruned</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="MatrixConvergenceCallback">
+<a class="viewcode-back" href="../../api/index.html#twocan.MatrixConvergenceCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MatrixConvergenceCallback</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback to monitor transformation matrix convergence during optimization.</span>
+<span class="sd">    </span>
+<span class="sd">    This callback tracks the transformation matrices from recent trials and</span>
+<span class="sd">    stops optimization when they converge (have low variance), indicating</span>
+<span class="sd">    that the registration has stabilized. Useful for detecting when further</span>
+<span class="sd">    optimization is unlikely to improve results.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    window_size : int, default=10</span>
+<span class="sd">        Number of recent trials to consider for convergence assessment.</span>
+<span class="sd">    tolerance : float, default=0.01</span>
+<span class="sd">        Maximum allowed variance in matrix elements for convergence.</span>
+<span class="sd">        Lower values require tighter convergence.</span>
+<span class="sd">    min_trials : int, default=20</span>
+<span class="sd">        Minimum number of trials before convergence checking begins.</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    window_size : int</span>
+<span class="sd">        Current window size for convergence assessment.</span>
+<span class="sd">    tolerance : float</span>
+<span class="sd">        Current tolerance for matrix element variance.</span>
+<span class="sd">    min_trials : int</span>
+<span class="sd">        Minimum trials before convergence checking.</span>
+<span class="sd">    matrices : List[np.ndarray]</span>
+<span class="sd">        List storing recent transformation matrices.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">min_trials</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="o">=</span> <span class="n">window_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="o">=</span> <span class="n">tolerance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span> <span class="o">=</span> <span class="n">min_trials</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Study</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check transformation matrix convergence and stop if converged.</span>
+<span class="sd">        </span>
+<span class="sd">        This method monitors the transformation matrices from recent trials</span>
+<span class="sd">        and stops the study when they show low variance, indicating convergence.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        study : optuna.Study</span>
+<span class="sd">            The Optuna study object.</span>
+<span class="sd">        trial : optuna.Trial</span>
+<span class="sd">            The just-completed trial containing the transformation matrix.</span>
+<span class="sd">            </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        optuna.TrialPruned</span>
+<span class="sd">            When matrix convergence is detected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract transformation matrix if available</span>
+        <span class="k">if</span> <span class="s1">&#39;M&#39;</span> <span class="ow">in</span> <span class="n">trial</span><span class="o">.</span><span class="n">user_attrs</span><span class="p">:</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">user_attrs</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+            
+            <span class="c1"># Keep only recent matrices</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">:]</span>
+            
+            <span class="c1"># Check convergence if we have enough trials</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrices</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="ow">and</span> <span class="n">trial</span><span class="o">.</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span><span class="p">:</span>
+                <span class="c1"># Calculate variance across recent matrices</span>
+                <span class="n">matrix_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrices</span><span class="p">)</span>
+                <span class="n">variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">matrix_stack</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">max_variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">max_variance</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matrix convergence detected: max variance = </span><span class="si">{</span><span class="n">max_variance</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> &lt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">optuna</span><span class="o">.</span><span class="n">TrialPruned</span><span class="p">()</span></div>
+
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

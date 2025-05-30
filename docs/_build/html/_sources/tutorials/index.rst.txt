@@ -1,0 +1,66 @@
+Tutorials
+=========
+
+Step-by-step tutorials to learn Twocan from basics to advanced usage.
+
+These tutorials are interactive Jupyter notebooks that you can run locally or view in the documentation.
+
+.. toctree::
+   :maxdepth: 2
+
+   01_quickstart_basic_registration
+
+**Coming Soon:**
+
+* **Tutorial 2**: Custom trials, objectives, and callbacks [In Progress]
+* **Tutorial 3**: Picking registration channels [In Progress]
+
+Getting Started
+---------------
+
+If you're new to Twocan, start with the quickstart tutorial:
+
+.. toctree::
+   :maxdepth: 1
+
+   01_quickstart_basic_registration
+
+Running the Tutorials
+---------------------
+
+To run these tutorials locally:
+
+1. **Clone the repository**:
+   
+   .. code-block:: bash
+   
+      git clone https://github.com/camlab-bioml/twocan.git
+      cd twocan
+
+2. **Install Twocan**:
+   
+   .. code-block:: bash
+   
+      conda env create -f environment.yml
+      conda activate twocan
+      pip install -e .
+
+3. **Start Jupyter**:
+   
+   .. code-block:: bash
+   
+      cd notebooks
+      jupyter lab
+
+4. **Open any tutorial notebook** and follow along!
+
+Tutorial Data
+-------------
+
+Tutorials use example datasets included in the repository:
+
+* **Tutorial 1 & 2**: Uses data from ``notebooks/examples/01_imc_if/``
+* **Tutorial 3**: Uses data from ``notebooks/examples/02_imc_fish/``  
+* **Tutorial 4**: Uses data from ``notebooks/examples/03_ims_imc/``
+
+All tutorial data is included, so you can run everything locally without additional downloads. 

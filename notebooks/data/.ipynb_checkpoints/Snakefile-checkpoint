@@ -1,0 +1,99 @@
+import numpy as np
+import pandas as pd
+from itertools import chain
+from tifffile import imread
+from skimage.filters import threshold_otsu
+import cv2
+import optuna
+from spatialdata import SpatialData, read_zarr
+from twocan import preprocess_if, preprocess_imc, multi_channel_corr, RegEstimator, prep_zarr, read_M
+from twocan.callbacks import SaveTrialsDFCallback
+from twocan.utils import pick_best_registration
+import matplotlib.pyplot as plt
+from scipy.stats.mstats import winsorize
+
+from workflow_utils import registration_trial, iou_single_objective, iou_multi_objective, plot_registration_results
+
+# Setup configuration
+metadata = pd.read_csv('data/pairs.csv', index_col=0)
+
+# for each pair of images will try three samplers, two objectives
+samp_dict = {
+    'TPESampler': optuna.samplers.TPESampler, 
+    'RandomSampler': optuna.samplers.RandomSampler, 
+    'GPSampler': optuna.samplers.GPSampler
+}
+
+obj_dict = {
+    'iou-single-objective': [iou_single_objective, 'maximize'], 
+    'iou-multi-objective': [iou_multi_objective, ['maximize','maximize']]
+}
+
+seed = 42
+
+rule all:
+    input:
+        lambda w: [
+            f'results/{z}_{s}_{o}.png'
+            for z in metadata.index
+            for s in samp_dict.keys()
+            for o in obj_dict.keys()
+            # Include all samplers for single-objective and TPE for multi-objective
+            if (o == 'iou-single-objective') or (s == 'TPESampler' and o == 'iou-multi-objective')
+        ]
+
+
+rule run_optuna: 
+    input: "data/{zarr_id}.zarr"
+    output: "results/{zarr_id}_{sampler}_{objective}.csv"
+    run: 
+        # Load images
+        images = read_zarr(input[0])
+        registration_channels = metadata.loc[wildcards.zarr_id]['registration_channels'].split(' ')
+        correlation_channels =  metadata.loc[wildcards.zarr_id]['correlation_channels'].split(' ')
+        if_scale = metadata.loc[wildcards.zarr_id]['if_scale']
+        
+        # Setup callbacks
+        cbs = [SaveTrialsDFCallback(output[0], anno_dict={
+            'objective': wildcards.objective,
+            'sampler': wildcards.sampler,
+            'zarr_id': wildcards.zarr_id
+        })]
+        
+        # Create study with single or multi objective
+        if wildcards.objective == 'iou-single-objective':
+            study = optuna.create_study(
+                direction=obj_dict[wildcards.objective][1],
+                study_name=f"{wildcards.zarr_id}",
+                sampler=samp_dict[wildcards.sampler](seed=seed)
+            )
+
+        elif wildcards.objective == 'iou-multi-objective':
+            study = optuna.create_study(
+                directions=obj_dict[wildcards.objective][1],
+                study_name=f"{wildcards.zarr_id}",
+                sampler=samp_dict[wildcards.sampler](seed=seed)
+            )
+            
+        # Run optimization
+        study.optimize(
+            lambda trial: obj_dict[wildcards.objective][0](
+                trial, images, if_scale, registration_channels, correlation_channels
+            ),
+            n_trials=50,
+            callbacks=cbs
+        )
+
+rule plot_best_trial:
+    input: "results/{zarr_id}_{sampler}_{objective}.csv"
+    output: "results/{zarr_id}_{sampler}_{objective}.png"
+    run:
+        # Read the best trial data
+        df = pd.read_csv(input[0])
+        best_trial = pick_best_registration(df)  # Get best trial based on triangle score
+        
+        # Load images
+        images = read_zarr(f"data/{wildcards.zarr_id}.zarr")
+        
+        # Create visualization
+        plot_registration_results(images, best_trial, metadata.loc[wildcards.zarr_id], output[0])

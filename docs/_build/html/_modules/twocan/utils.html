@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>twocan.utils &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Core Concepts</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">twocan.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for twocan.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Utility functions and preprocessing classes for Twocan image registration.</span>
+
+<span class="sd">This module provides preprocessing classes for different imaging modalities,</span>
+<span class="sd">utility functions for data manipulation, and helper functions for working with</span>
+<span class="sd">SpatialData objects and transformation matrices.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="c1">#from skimage import transform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.filters</span><span class="w"> </span><span class="kn">import</span> <span class="n">gaussian</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats.mstats</span><span class="w"> </span><span class="kn">import</span> <span class="n">winsorize</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.transformations</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_transformation</span><span class="p">,</span> <span class="n">set_transformation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.transformations.transformations</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTransformation</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="stretch_255">
+<a class="viewcode-back" href="../../api/generated/twocan.stretch_255.html#twocan.stretch_255">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">stretch_255</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert an image to 8-bit grayscale by stretching its range to [0, 255].</span>
+<span class="sd">    </span>
+<span class="sd">    This function linearly stretches the intensity values of an image to span</span>
+<span class="sd">    the full 8-bit range [0, 255]. If the input image has zero maximum value,</span>
+<span class="sd">    the original image is returned unchanged.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : np.ndarray</span>
+<span class="sd">        Input image array of any shape and dtype.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        8-bit grayscale image with values in [0, 255] and dtype uint8.</span>
+<span class="sd">        Returns original image unchanged if max value is 0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">image</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">image</span> <span class="o">*</span> <span class="p">(</span><span class="mi">255</span><span class="o">/</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="prep_zarr">
+<a class="viewcode-back" href="../../api/index.html#twocan.prep_zarr">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">prep_zarr</span><span class="p">(</span><span class="n">IF_arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
+              <span class="n">IMC_arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
+              <span class="n">IF_panel</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> 
+              <span class="n">IMC_panel</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">sd</span><span class="o">.</span><span class="n">SpatialData</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a SpatialData object from IF and IMC arrays with their channel panels.</span>
+<span class="sd">    </span>
+<span class="sd">    This function takes raw image arrays and their corresponding channel names</span>
+<span class="sd">    to create a properly formatted SpatialData object containing both modalities.</span>
+<span class="sd">    The function handles both 2D and 3D input arrays, automatically adding a</span>
+<span class="sd">    channel dimension if needed.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    IF_arr : np.ndarray</span>
+<span class="sd">        Immunofluorescence array of shape (H, W) or (C, H, W).</span>
+<span class="sd">        If 2D, will be expanded to (1, H, W).</span>
+<span class="sd">    IMC_arr : np.ndarray</span>
+<span class="sd">        Imaging mass cytometry array of shape (H, W) or (C, H, W).</span>
+<span class="sd">        If 2D, will be expanded to (1, H, W).</span>
+<span class="sd">    IF_panel : List[str]</span>
+<span class="sd">        List of channel names for IF data. Must match the number of channels</span>
+<span class="sd">        in IF_arr.</span>
+<span class="sd">    IMC_panel : List[str]</span>
+<span class="sd">        List of channel names for IMC data. Must match the number of channels</span>
+<span class="sd">        in IMC_arr.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sd.SpatialData</span>
+<span class="sd">        SpatialData object containing both modalities with proper channel</span>
+<span class="sd">        information and coordinate systems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># prep zarr</span>
+    <span class="k">if</span> <span class="n">IF_arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">IF_arr</span> <span class="o">=</span> <span class="n">IF_arr</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+    <span class="k">if</span> <span class="n">IMC_arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">IMC_arr</span> <span class="o">=</span> <span class="n">IMC_arr</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">IF</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Image2DModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">IF_arr</span><span class="p">,</span> <span class="n">c_coords</span><span class="o">=</span><span class="n">IF_panel</span><span class="p">)</span>
+    <span class="n">IMC</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Image2DModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">IMC_arr</span><span class="p">,</span> <span class="n">c_coords</span><span class="o">=</span><span class="n">IMC_panel</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sd</span><span class="o">.</span><span class="n">SpatialData</span><span class="p">({</span><span class="s1">&#39;IF&#39;</span><span class="p">:</span> <span class="n">IF</span><span class="p">,</span> <span class="s1">&#39;IMC&#39;</span><span class="p">:</span> <span class="n">IMC</span><span class="p">})</span></div>
+
+
+
+
+<div class="viewcode-block" id="get_aligned_coordinates">
+<a class="viewcode-back" href="../../api/generated/twocan.get_aligned_coordinates.html#twocan.get_aligned_coordinates">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_aligned_coordinates</span><span class="p">(</span>
+    <span class="n">moving_element</span><span class="p">:</span> <span class="n">sd</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">SpatialElement</span><span class="p">,</span>
+    <span class="n">reference_element</span><span class="p">:</span> <span class="n">sd</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">SpatialElement</span><span class="p">,</span>
+    <span class="n">transformation</span><span class="p">:</span> <span class="n">BaseTransformation</span><span class="p">,</span>
+    <span class="n">reference_coordinate_system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>
+    <span class="n">moving_coordinate_system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>
+    <span class="n">new_coordinate_system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;aligned&#39;</span><span class="p">,</span>
+    <span class="n">write_to_sdata</span><span class="p">:</span> <span class="n">sd</span><span class="o">.</span><span class="n">SpatialData</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a transformation to align two spatial elements in a new coordinate system.</span>
+<span class="sd">    </span>
+<span class="sd">    This function applies a spatial transformation to align a moving element with</span>
+<span class="sd">    a reference element, creating a new coordinate system that contains both</span>
+<span class="sd">    elements in aligned space. The transformation is applied on top of any</span>
+<span class="sd">    existing transformations.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    moving_element : sd.models.SpatialElement</span>
+<span class="sd">        The spatial element to be transformed (e.g., image, points, shapes).</span>
+<span class="sd">    reference_element : sd.models.SpatialElement</span>
+<span class="sd">        The reference element that defines the target space.</span>
+<span class="sd">    transformation : BaseTransformation</span>
+<span class="sd">        The transformation to apply to the moving element.</span>
+<span class="sd">    reference_coordinate_system : str, default=&quot;global&quot;</span>
+<span class="sd">        Name of the coordinate system for the reference element.</span>
+<span class="sd">    moving_coordinate_system : str, default=&quot;global&quot;</span>
+<span class="sd">        Name of the coordinate system for the moving element.</span>
+<span class="sd">    new_coordinate_system : str, default=&#39;aligned&#39;</span>
+<span class="sd">        Name of the new coordinate system after alignment.</span>
+<span class="sd">    write_to_sdata : sd.SpatialData, optional</span>
+<span class="sd">        If provided, write the transformation to this SpatialData object.</span>
+<span class="sd">        </span>
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    AssertionError</span>
+<span class="sd">        If the existing transformations are not BaseTransformation instances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">old_moving_transformation</span> <span class="o">=</span> <span class="n">get_transformation</span><span class="p">(</span><span class="n">moving_element</span><span class="p">,</span> <span class="n">moving_coordinate_system</span><span class="p">)</span>
+    <span class="n">old_reference_transformation</span> <span class="o">=</span> <span class="n">get_transformation</span><span class="p">(</span><span class="n">reference_element</span><span class="p">,</span> <span class="n">reference_coordinate_system</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">old_moving_transformation</span><span class="p">,</span> <span class="n">BaseTransformation</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">old_reference_transformation</span><span class="p">,</span> <span class="n">BaseTransformation</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="n">new_moving_transformation</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">([</span><span class="n">old_moving_transformation</span><span class="p">,</span> <span class="n">transformation</span><span class="p">])</span>
+    <span class="n">new_reference_transformation</span> <span class="o">=</span> <span class="n">old_reference_transformation</span>
+    <span class="c1">#</span>
+    <span class="n">set_transformation</span><span class="p">(</span><span class="n">moving_element</span><span class="p">,</span> <span class="n">new_moving_transformation</span><span class="p">,</span> <span class="n">new_coordinate_system</span><span class="p">,</span> <span class="n">write_to_sdata</span><span class="o">=</span><span class="n">write_to_sdata</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="read_M">
+<a class="viewcode-back" href="../../api/generated/twocan.read_M.html#twocan.read_M">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_M</span><span class="p">(</span><span class="n">M</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a string representation of an affine transformation matrix.</span>
+<span class="sd">    </span>
+<span class="sd">    This function parses string representations of 2x3 affine transformation</span>
+<span class="sd">    matrices, handling various formatting inconsistencies by normalizing</span>
+<span class="sd">    whitespace and bracket placement. Useful when reading from csv.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : str</span>
+<span class="sd">        String representation of a 2x3 affine transformation matrix.</span>
+<span class="sd">        Can contain various whitespace and formatting variations.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        2x3 affine transformation matrix of shape (2, 3).</span>
+<span class="sd">           </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function uses eval() which can be unsafe with untrusted input.</span>
+<span class="sd">    It should only be used with trusted transformation matrix strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mstring</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">mstring</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\[\[,&quot;</span><span class="p">,</span> <span class="s2">&quot;[[&quot;</span><span class="p">,</span> <span class="n">mstring</span><span class="p">)</span>
+    <span class="n">mstring</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\],\[,&quot;</span><span class="p">,</span> <span class="s2">&quot;],[&quot;</span><span class="p">,</span> <span class="n">mstring</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;np.array(&#39;</span><span class="o">+</span> <span class="n">mstring</span> <span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span></div>
+
+
+
+<div class="viewcode-block" id="multi_channel_corr">
+<a class="viewcode-back" href="../../api/index.html#twocan.multi_channel_corr">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">multi_channel_corr</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate correlation coefficients between all pairs of channels from two images.</span>
+<span class="sd">    </span>
+<span class="sd">    This function computes the Pearson correlation coefficient between every</span>
+<span class="sd">    channel in the source image and every channel in the target image. The</span>
+<span class="sd">    images are first normalized (z-scored) channel-wise before correlation</span>
+<span class="sd">    calculation.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : np.ndarray</span>
+<span class="sd">        Source image array of shape (n_channels_1, n_pixels).</span>
+<span class="sd">        Each row represents a flattened channel.</span>
+<span class="sd">    target : np.ndarray</span>
+<span class="sd">        Target image array of shape (n_channels_2, n_pixels).</span>
+<span class="sd">        Each row represents a flattened channel.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Correlation matrix of shape (n_channels_1, n_channels_2).</span>
+<span class="sd">        Element (i, j) contains the correlation between source channel i</span>
+<span class="sd">        and target channel j.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The function assumes the input arrays have the same number of pixels</span>
+<span class="sd">    (same second dimension). Channels are normalized to have zero mean</span>
+<span class="sd">    and unit standard deviation before correlation calculation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="c1"># Normalize the data</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="p">(</span><span class="n">source</span> <span class="o">-</span> <span class="n">source</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">/</span> <span class="n">source</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">target</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">/</span> <span class="n">target</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="c1"># Calculate correlation matrix using matrix multiplication</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="IFProcessor">
+<a class="viewcode-back" href="../../api/index.html#twocan.IFProcessor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IFProcessor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preprocessing pipeline for Immunofluorescence (IF) images.</span>
+<span class="sd">    </span>
+<span class="sd">    This class provides a standardized preprocessing pipeline for IF images</span>
+<span class="sd">    including channel summation, normalization, Gaussian blurring, and optional</span>
+<span class="sd">    binarization. The processor can be configured with trial parameters from</span>
+<span class="sd">    Optuna optimization.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    binarize : bool, default=True</span>
+<span class="sd">        Whether to apply binarization after preprocessing.</span>
+<span class="sd">    binarization_threshold : float, default=0.1</span>
+<span class="sd">        Threshold value for binarization (0-1 range after normalization).</span>
+<span class="sd">    sigma : float, default=1</span>
+<span class="sd">        Standard deviation for Gaussian blur kernel.</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    binarize : bool</span>
+<span class="sd">        Whether binarization is enabled.</span>
+<span class="sd">    binarization_threshold : float</span>
+<span class="sd">        Current binarization threshold.</span>
+<span class="sd">    sigma : float</span>
+<span class="sd">        Current Gaussian blur sigma value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binarize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">binarization_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binarization_threshold</span> <span class="o">=</span> <span class="n">binarization_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        
+<div class="viewcode-block" id="IFProcessor.configure">
+<a class="viewcode-back" href="../../api/index.html#twocan.IFProcessor.configure">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial_params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure processor parameters from Optuna trial parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        This method updates the processor parameters based on values suggested</span>
+<span class="sd">        by an Optuna trial. It looks for specific parameter names in the trial</span>
+<span class="sd">        params dictionary and updates the corresponding attributes.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        trial_params : dict</span>
+<span class="sd">            Dictionary of trial parameters from Optuna optimization.</span>
+<span class="sd">            Expected keys: &#39;IF_binarization_threshold&#39;, &#39;IF_gaussian_sigma&#39;,</span>
+<span class="sd">            &#39;binarize_images&#39;.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : IFProcessor</span>
+<span class="sd">            Returns self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="c1"># Extract IF-specific parameters from trial params</span>
+            <span class="k">if</span> <span class="s2">&quot;IF_binarization_threshold&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">binarization_threshold</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IF_binarization_threshold&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;IF_gaussian_sigma&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IF_gaussian_sigma&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;binarize_images&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">binarize</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;binarize_images&quot;</span><span class="p">]</span>            
+        <span class="k">return</span> <span class="bp">self</span> </div>
+
+        
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_image</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply the preprocessing pipeline to an IF image.</span>
+<span class="sd">        </span>
+<span class="sd">        The preprocessing pipeline consists of:</span>
+<span class="sd">        1. Sum all channels to create a single composite image</span>
+<span class="sd">        2. Normalize to [0, 1] range by dividing by maximum value</span>
+<span class="sd">        3. Apply Gaussian blur with specified sigma</span>
+<span class="sd">        4. Optionally binarize using the threshold</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source_image : np.ndarray</span>
+<span class="sd">            Input IF image of shape (C, H, W) where C is number of channels.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Processed image of shape (H, W). If binarize=True, returns boolean</span>
+<span class="sd">            array. Otherwise returns float array in [0, 1] range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source_image</span> <span class="o">=</span> <span class="n">source_image</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">source_image</span> <span class="o">=</span> <span class="n">source_image</span> <span class="o">/</span> <span class="n">source_image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">source_image</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">binarize</span><span class="p">:</span>
+            <span class="n">source_image</span> <span class="o">=</span> <span class="n">source_image</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">binarization_threshold</span>
+        <span class="k">return</span> <span class="n">source_image</span></div>
+
+
+
+<div class="viewcode-block" id="IMCProcessor">
+<a class="viewcode-back" href="../../api/index.html#twocan.IMCProcessor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IMCProcessor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preprocessing pipeline for Imaging Mass Cytometry (IMC) images.</span>
+<span class="sd">    </span>
+<span class="sd">    This class provides a comprehensive preprocessing pipeline specifically</span>
+<span class="sd">    designed for IMC images, including arcsinh transformation for variance</span>
+<span class="sd">    stabilization, winsorization for outlier handling, normalization,</span>
+<span class="sd">    Gaussian blurring, and optional binarization.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arcsinh_normalize : bool, default=True</span>
+<span class="sd">        Whether to apply arcsinh transformation for variance stabilization.</span>
+<span class="sd">    arcsinh_cofactor : float, default=5</span>
+<span class="sd">        Cofactor for arcsinh transformation. Lower values increase the</span>
+<span class="sd">        transformation strength.</span>
+<span class="sd">    winsorize_limits : list of float, default=[None, None]</span>
+<span class="sd">        Lower and upper percentile limits for winsorization.</span>
+<span class="sd">        [0.01, 0.01] means clip bottom 1% and top 1% of values.</span>
+<span class="sd">    binarize : bool, default=True</span>
+<span class="sd">        Whether to apply binarization after preprocessing.</span>
+<span class="sd">    binarization_threshold : float, default=2</span>
+<span class="sd">        Threshold value for binarization.</span>
+<span class="sd">    sigma : float, default=1</span>
+<span class="sd">        Standard deviation for Gaussian blur kernel.</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arcsinh_normalize : bool</span>
+<span class="sd">        Whether arcsinh transformation is enabled.</span>
+<span class="sd">    arcsinh_cofactor : float</span>
+<span class="sd">        Current arcsinh cofactor value.</span>
+<span class="sd">    winsorize_limits : list</span>
+<span class="sd">        Current winsorization limits.</span>
+<span class="sd">    binarize : bool</span>
+<span class="sd">        Whether binarization is enabled.</span>
+<span class="sd">    binarization_threshold : float</span>
+<span class="sd">        Current binarization threshold.</span>
+<span class="sd">    sigma : float</span>
+<span class="sd">        Current Gaussian blur sigma value.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The arcsinh transformation is particularly useful for IMC data because it</span>
+<span class="sd">    stabilizes variance across the intensity range, which is important for</span>
+<span class="sd">    count-based mass spectrometry data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arcsinh_normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">arcsinh_cofactor</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">winsorize_limits</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">binarize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">binarization_threshold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arcsinh_normalize</span> <span class="o">=</span> <span class="n">arcsinh_normalize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arcsinh_cofactor</span> <span class="o">=</span> <span class="n">arcsinh_cofactor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">winsorize_limits</span> <span class="o">=</span> <span class="n">winsorize_limits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binarization_threshold</span> <span class="o">=</span> <span class="n">binarization_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        
+<div class="viewcode-block" id="IMCProcessor.configure">
+<a class="viewcode-back" href="../../api/index.html#twocan.IMCProcessor.configure">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial_params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure processor parameters from Optuna trial parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        This method updates the processor parameters based on values suggested</span>
+<span class="sd">        by an Optuna trial. It looks for specific IMC parameter names in the</span>
+<span class="sd">        trial params dictionary.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        trial_params : dict</span>
+<span class="sd">            Dictionary of trial parameters from Optuna optimization.</span>
+<span class="sd">            Expected keys: &#39;IMC_arcsinh_normalize&#39;, &#39;IMC_arcsinh_cofactor&#39;,</span>
+<span class="sd">            &#39;IMC_winsorization_lower_limit&#39;, &#39;IMC_winsorization_upper_limit&#39;,</span>
+<span class="sd">            &#39;IMC_binarization_threshold&#39;, &#39;IMC_gaussian_sigma&#39;, &#39;binarize_images&#39;.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : IMCProcessor</span>
+<span class="sd">            Returns self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;IMC_arcsinh_normalize&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arcsinh_normalize</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IMC_arcsinh_normalize&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;IMC_arcsinh_cofactor&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arcsinh_cofactor</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IMC_arcsinh_cofactor&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;IMC_winsorization_lower_limit&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span> <span class="ow">and</span> <span class="s2">&quot;IMC_winsorization_upper_limit&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">winsorize_limits</span> <span class="o">=</span> <span class="p">[</span><span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IMC_winsorization_lower_limit&quot;</span><span class="p">],</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IMC_winsorization_upper_limit&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="s2">&quot;IMC_binarization_threshold&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">binarization_threshold</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IMC_binarization_threshold&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;IMC_gaussian_sigma&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;IMC_gaussian_sigma&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;binarize_images&quot;</span> <span class="ow">in</span> <span class="n">trial_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">binarize</span> <span class="o">=</span> <span class="n">trial_params</span><span class="p">[</span><span class="s2">&quot;binarize_images&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+        
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_image</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply the IMC preprocessing pipeline to an image.</span>
+<span class="sd">        </span>
+<span class="sd">        The preprocessing pipeline consists of:</span>
+<span class="sd">        1. Optional arcsinh transformation for variance stabilization</span>
+<span class="sd">        2. Sum all channels to create composite image</span>
+<span class="sd">        3. Winsorization to clip outlier intensities</span>
+<span class="sd">        4. Normalize to [0, 1] range</span>
+<span class="sd">        5. Apply Gaussian blur</span>
+<span class="sd">        6. Optional binarization</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        target_image : np.ndarray</span>
+<span class="sd">            Input IMC image of shape (C, H, W) where C is number of channels.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Processed image of shape (H, W). If binarize=True, returns boolean</span>
+<span class="sd">            array. Otherwise returns float array in [0, 1] range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arcsinh_normalize</span><span class="p">:</span>
+            <span class="n">target_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">target_image</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">arcsinh_cofactor</span><span class="p">)</span>
+        <span class="n">target_image</span> <span class="o">=</span> <span class="n">target_image</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">target_image</span> <span class="o">=</span> <span class="n">winsorize</span><span class="p">(</span><span class="n">target_image</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">winsorize_limits</span><span class="p">)</span>
+        <span class="n">target_image</span> <span class="o">=</span> <span class="n">target_image</span> <span class="o">/</span> <span class="n">target_image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">target_image</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">target_image</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">binarize</span><span class="p">:</span>
+            <span class="n">target_image</span> <span class="o">=</span> <span class="n">target_image</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">binarization_threshold</span>
+        <span class="k">return</span> <span class="n">target_image</span></div>
+
+
+
+<div class="viewcode-block" id="pick_best_registration">
+<a class="viewcode-back" href="../../api/index.html#twocan.pick_best_registration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pick_best_registration</span><span class="p">(</span><span class="n">study_df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate triangle score and return best trial from optimization results.</span>
+<span class="sd">    </span>
+<span class="sd">    This function implements a balanced scoring approach for selecting the best</span>
+<span class="sd">    registration trial from a set of optimization results. It combines three</span>
+<span class="sd">    key metrics (logical AND, IoU, and correlation) using a triangular scoring</span>
+<span class="sd">    scheme that balances all three aspects of registration quality.</span>
+<span class="sd">    </span>
+<span class="sd">    The triangle score is calculated as:</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: text</span>
+<span class="sd">    </span>
+<span class="sd">        (1/3) * |norm_and * norm_corr + norm_corr * norm_iou + norm_iou * norm_and|</span>
+<span class="sd">    </span>
+<span class="sd">    where each metric is normalized to [0,1] within the group.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    study_df : pd.DataFrame</span>
+<span class="sd">        DataFrame containing trial results with required columns:</span>
+<span class="sd">        - &#39;user_attrs_logical_and&#39;: Logical AND overlap between images</span>
+<span class="sd">        - &#39;user_attrs_logical_iou&#39;: Intersection over Union score</span>
+<span class="sd">        - &#39;user_attrs_reg_image_max_corr&#39;: Maximum correlation between channels</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.Series</span>
+<span class="sd">        DataFrame row containing the trial with the highest balanced score.</span>
+<span class="sd">        The returned series includes all original columns plus computed</span>
+<span class="sd">        normalization columns and the final &#39;balanced_score&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The logical AND values are log-transformed before normalization because</span>
+<span class="sd">    they typically span several orders of magnitude. The triangle score</span>
+<span class="sd">    approach ensures that no single metric dominates the selection, leading</span>
+<span class="sd">    to more robust registration quality assessment.</span>
+<span class="sd">    </span>
+<span class="sd">    Missing or NaN values in any of the required columns will result in</span>
+<span class="sd">    NaN normalized scores, which may affect the final ranking.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_and&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;user_attrs_logical_and&#39;</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;user_attrs_logical_and&#39;</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_iou&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;user_attrs_logical_iou&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;user_attrs_logical_iou&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_corr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;user_attrs_reg_image_max_corr&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;user_attrs_reg_image_max_corr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;balanced_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_and&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_corr&#39;</span><span class="p">]</span> <span class="o">+</span> 
+                                        <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_corr&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_iou&#39;</span><span class="p">]</span> <span class="o">+</span> 
+                                        <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_iou&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;norm_and&#39;</span><span class="p">])</span>
+    <span class="c1"># Get the row with maximum triangle score</span>
+    <span class="n">best_row</span> <span class="o">=</span> <span class="n">study_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">study_df</span><span class="p">[</span><span class="s1">&#39;balanced_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">best_row</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

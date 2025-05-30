@@ -2,9 +2,40 @@ from typing import Tuple, List, Optional
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.axes import Axes
+import matplotlib.colors as colors
 from skimage import exposure
 import numpy as np
 
+
+class AsinhNorm(colors.Normalize):
+    def __init__(self, vmin=0, vmax=100, cofactor=5, clip=True):
+        self.cofactor = cofactor
+        super().__init__(vmin, vmax, clip)
+
+    def __call__(self, value, clip=None):
+        if clip is None:
+            clip = self.clip
+        if clip:
+            value = np.ma.masked_array(np.clip(value, self.vmin, self.vmax))
+        
+        # Apply arcsinh transformation
+        transformed = np.arcsinh(value / self.cofactor)
+        
+        # Normalize to [0, 1] range
+        transformed_min = np.arcsinh(self.vmin / self.cofactor)
+        transformed_max = np.arcsinh(self.vmax / self.cofactor)
+        
+        return (transformed - transformed_min) / (transformed_max - transformed_min)
+
+    def inverse(self, value):
+        transformed_min = np.arcsinh(self.vmin / self.cofactor)
+        transformed_max = np.arcsinh(self.vmax / self.cofactor)
+        
+        # Convert back from [0, 1] to transformed space
+        transformed = value * (transformed_max - transformed_min) + transformed_min
+        
+        # Apply inverse arcsinh (sinh)
+        return np.sinh(transformed) * self.cofactor
 
 def get_rectangle_area(w1: float, h1: float, M: np.ndarray) -> Tuple[float, float, float]:
     """Calculate the area and dimensions of a transformed rectangle.
@@ -33,6 +64,19 @@ def get_rectangle_area(w1: float, h1: float, M: np.ndarray) -> Tuple[float, floa
     y_length = np.max(y) - np.min(y)
     return area, x_length, y_length
 
+
+def plot_registration(im1, im2, M):
+    """Plot a cartoon representation of an affine transformation.
+    
+    Visualizes how a rectangle is transformed by an affine matrix, useful for
+    understanding registration transformations.
+    
+    Parameters
+    ----------
+    """
+    w1, h1 = im1.shape[-2:]
+    w2, h2 = im2.shape[-2:]
+    return plot_cartoon_affine(w1, h1, M, w2, h2, ax=None, show_source=False, source_color='#37c100', target_color='#cc008b')
 
 def plot_cartoon_affine(w1: float, h1: float, M: np.ndarray, w2: float, h2: float, 
                        ax: Optional[Axes] = None, show_source: bool = False, 
@@ -63,10 +107,6 @@ def plot_cartoon_affine(w1: float, h1: float, M: np.ndarray, w2: float, h2: floa
     -------
     Tuple[Axes, List[Line2D]]
         The matplotlib axes object and list of plotted lines.
-        
-    Examples
-    --------
-    >>> plot_cartoon_affine(*images['IMC'].shape[-2:], reg.M_, *images['IF'].shape[-2:])
     """
     if ax is None:
         ax = plt.gca()

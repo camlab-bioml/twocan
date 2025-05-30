@@ -8,8 +8,8 @@ from twocan.utils import (
     prep_zarr,
     read_M,
     multi_channel_corr,
-    preprocess_if,
-    preprocess_imc,
+    IFProcessor,
+    IMCProcessor,
     pick_best_registration
 )
 
@@ -75,21 +75,62 @@ class TestMultiChannelCorr:
         assert corr.shape == (3, 2)
         assert np.all(np.abs(corr) <= 1)
 
-class TestPreprocessIF:
-    def test_preprocess_if(self):
-        """Test IF image preprocessing."""
+class TestIFProcessor:
+    def test_if_processor_init(self):
+        """Test IFProcessor initialization."""
+        processor = IFProcessor(binarize=True, binarization_threshold=0.2, sigma=2)
+        assert processor.binarize == True
+        assert processor.binarization_threshold == 0.2
+        assert processor.sigma == 2
+    
+    def test_if_processor_configure(self):
+        """Test IFProcessor parameter configuration."""
+        processor = IFProcessor()
+        trial_params = {
+            'IF_binarization_threshold': 0.3,
+            'IF_gaussian_sigma': 1.5,
+            'binarize_images': False
+        }
+        processor.configure(trial_params)
+        assert processor.binarization_threshold == 0.3
+        assert processor.sigma == 1.5
+        assert processor.binarize == False
+    
+    def test_if_processor_call(self):
+        """Test IFProcessor image processing."""
+        processor = IFProcessor(binarize=False, sigma=1)
         img = np.random.rand(3, 100, 100)
-        result = preprocess_if(img, if_scale=1.0, binarize=True)
+        result = processor(img)
         
         assert result.shape == (100, 100)
         assert result.max() <= 1
         assert result.min() >= 0
 
-class TestPreprocessIMC:
-    def test_preprocess_imc(self):
-        """Test IMC image preprocessing."""
-        img = np.random.rand(3, 100, 100)
-        result = preprocess_imc(img, arcsinh_normalize=True)
+class TestIMCProcessor:
+    def test_imc_processor_init(self):
+        """Test IMCProcessor initialization."""
+        processor = IMCProcessor(arcsinh_normalize=False, binarization_threshold=1.5)
+        assert processor.arcsinh_normalize == False
+        assert processor.binarization_threshold == 1.5
+    
+    def test_imc_processor_configure(self):
+        """Test IMCProcessor parameter configuration."""
+        processor = IMCProcessor()
+        trial_params = {
+            'IMC_arcsinh_cofactor': 10,
+            'IMC_binarization_threshold': 3,
+            'IMC_gaussian_sigma': 0.5
+        }
+        processor.configure(trial_params)
+        assert processor.arcsinh_cofactor == 10
+        assert processor.binarization_threshold == 3
+        assert processor.sigma == 0.5
+    
+    def test_imc_processor_call(self):
+        """Test IMCProcessor image processing."""
+        processor = IMCProcessor(binarize=False, sigma=1)
+        img = np.random.rand(3, 100, 100) + 1  # Add 1 to avoid zeros for arcsinh
+        result = processor(img)
         
         assert result.shape == (100, 100)
         assert result.max() <= 1
@@ -105,4 +146,5 @@ class TestPickBestRegistration:
         })
         best = pick_best_registration(study_df)
         assert isinstance(best, pd.Series)
-        assert all(k in best for k in ['user_attrs_logical_and', 'user_attrs_logical_iou', 'user_attrs_reg_image_max_corr']) 
+        assert all(k in best for k in ['user_attrs_logical_and', 'user_attrs_logical_iou', 'user_attrs_reg_image_max_corr'])
+        assert 'balanced_score' in best 

@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic registration with Twocan defaults &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../api/index.html" />
+    <link rel="prev" title="Core Concepts" href="../concepts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core Concepts</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic registration with Twocan defaults</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#load-data">Load data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-optimization-to-find-the-best-registration-parameters">Run optimization to find the best registration parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pick-best-trial">Pick best trial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualize-result">Visualize result</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#register">Register!</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#recommendations">Recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spatialdata">SpatialData</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pros">Pros:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cons">Cons:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transform">Transform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualize-the-transformation">Visualize the transformation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#skimage-numpy">Skimage/numpy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Pros:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Cons:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apply-the-transformation">Apply the transformation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Basic registration with Twocan defaults</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/01_basic_registration.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basic-registration-with-twocan-defaults">
+<h1>Basic registration with Twocan defaults<a class="headerlink" href="#basic-registration-with-twocan-defaults" title="Link to this heading"></a></h1>
+<p>This notebook demonstrates a basic image registration workflow using the <code class="docutils literal notranslate"><span class="pre">Twocan</span></code> library. We will register an example same-slide co-stained IF and IMC image using the default utilities:</p>
+<ol class="arabic simple">
+<li><p>Preprocessors <code class="docutils literal notranslate"><span class="pre">IFprocessor</span></code> and <code class="docutils literal notranslate"><span class="pre">IMCprocessor</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RegEstimator</span></code> to get the transformation matrix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">registation_trial</span></code> and <code class="docutils literal notranslate"><span class="pre">iou_corr_single_objective</span></code> which are designed for IF/IMC registration</p></li>
+</ol>
+<p>Custom functions can be provided in place of these defaults to register pairs of images of different technologies or experimental set ups (eg. serial sections)</p>
+<p>We will set the IF as the “fixed” or target image, and IMC as the “moving” or soruce image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twocan</span><span class="w"> </span><span class="kn">import</span> <span class="n">RegEstimator</span><span class="p">,</span> <span class="n">iou_corr_single_objective</span><span class="p">,</span> <span class="n">get_aligned_coordinates</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twocan.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pick_best_registration</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">twocan.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_registration</span><span class="p">,</span> <span class="n">get_merge</span><span class="p">,</span> <span class="n">AsinhNorm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_zarr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.transformations</span><span class="w"> </span><span class="kn">import</span> <span class="n">Affine</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">transform</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">optuna</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/harrigan/.conda/envs/twocan/lib/python3.9/site-packages/pyproj/__init__.py:95: UserWarning: pyproj unable to set database path.
+  _pyproj_global_context_initialize()
+/home/harrigan/.conda/envs/twocan/lib/python3.9/site-packages/numba/core/decorators.py:246: RuntimeWarning: nopython is set for njit and is ignored
+  warnings.warn(&#39;nopython is set for njit and is ignored&#39;, RuntimeWarning)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="load-data">
+<h2>Load data<a class="headerlink" href="#load-data" title="Link to this heading"></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span> <span class="o">=</span> <span class="n">read_zarr</span><span class="p">(</span><span class="s1">&#39;data/cell-line-0028-bd18455.zarr&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Both the IF and IMC image are saved into this zarr, with their channel names. The IMC image has a transformation matrix in the ‘aligned’ coordinate system, and we will show how this matrix was found using Twocan. Take a peek:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">images</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;IF&#39;: &lt;xarray.DataArray &#39;image&#39; (c: 3, y: 512, x: 512)&gt; Size: 2MB
+dask.array&lt;from-zarr, shape=(3, 512, 512), dtype=uint16, chunksize=(3, 512, 512), chunktype=numpy.ndarray&gt;
+Coordinates:
+  * c        (c) &lt;U4 48B &#39;DAPI&#39; &#39;GFP&#39; &#39;RFP&#39;
+  * y        (y) float64 4kB 0.5 1.5 2.5 3.5 4.5 ... 508.5 509.5 510.5 511.5
+  * x        (x) float64 4kB 0.5 1.5 2.5 3.5 4.5 ... 508.5 509.5 510.5 511.5
+Attributes:
+    transform:  {&#39;global&#39;: Identity }, &#39;IMC&#39;: &lt;xarray.DataArray &#39;image&#39; (c: 24, y: 944, x: 953)&gt; Size: 86MB
+dask.array&lt;from-zarr, shape=(24, 944, 953), dtype=float32, chunksize=(24, 944, 953), chunktype=numpy.ndarray&gt;
+Coordinates:
+  * c        (c) &lt;U12 1kB &#39;-&#39; &#39;pHH3_S28&#39; &#39;-&#39; &#39;-&#39; ... &#39;PCNA&#39; &#39;DNA1&#39; &#39;DNA2&#39; &#39;-&#39;
+  * y        (y) float64 8kB 0.5 1.5 2.5 3.5 4.5 ... 940.5 941.5 942.5 943.5
+  * x        (x) float64 8kB 0.5 1.5 2.5 3.5 4.5 ... 949.5 950.5 951.5 952.5
+Attributes:
+    transform:  {&#39;global&#39;: Identity , &#39;aligned&#39;: Sequence \n    Identity \n  ...}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Twocan provides a custom normalization function <code class="docutils literal notranslate"><span class="pre">AsinhNorm</span></code> to display  IMC signal.</p>
+<p>The two images are of the same set of cells, but need to be registered in order to line up their signal!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IF&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DAPI&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;IF: DAPI&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IMC&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DNA1&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">AsinhNorm</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">],</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;IMC: Arcsinh transformed DNA1&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IF&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DAPI&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IMC&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DNA1&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">AsinhNorm</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Merge&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0b2f7be23cae01c1887ea0ccfdce8443abad43fce52650accb25c10a3475842c.png" src="../_images/0b2f7be23cae01c1887ea0ccfdce8443abad43fce52650accb25c10a3475842c.png" />
+</div>
+</div>
+</section>
+<section id="run-optimization-to-find-the-best-registration-parameters">
+<h2>Run optimization to find the best registration parameters<a class="headerlink" href="#run-optimization-to-find-the-best-registration-parameters" title="Link to this heading"></a></h2>
+<p>We will register using nuclear channels: DAPI and DNA1/DNA2 respectively. All channels with matching names to the list will be summed along the channel axis to create the registration image. That is: DAPI will be registered to the DNA1+DNA2 signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">registration_channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DAPI&#39;</span><span class="p">,</span> <span class="s1">&#39;DNA1&#39;</span><span class="p">,</span> <span class="s1">&#39;DNA2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll now run an <code class="docutils literal notranslate"><span class="pre">optuna</span></code> study where each trial suggests preprocessing parameters, and attempts a registration. Note that most of the time, no registration is found, and the value of the trial is 0.</p>
+<p>The resolution of the IF image (1.714um/px) is different from the IMC (1um/px), we’ll start with a rough rescaling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image2DModel</span>
+
+<span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Image2DModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">transform</span><span class="o">.</span><span class="n">rescale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.714</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF&#39;</span><span class="p">]]),</span> <span class="n">c_coords</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> no axes information specified in the object, setting `dims` to: <span class=" -Color -Color-Bold">(</span><span class=" -Color -Color-Green">&#39;c&#39;</span>, <span class=" -Color -Color-Green">&#39;y&#39;</span>, <span class=" -Color -Color-Green">&#39;x&#39;</span><span class=" -Color -Color-Bold">)</span>                           
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">,</span> <span class="n">study_name</span><span class="o">=</span><span class="s2">&quot;example_1&quot;</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TPESampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">435</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[I 2025-05-30 18:29:33,804] A new study created in memory with name: example_1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">trial</span><span class="p">:</span> <span class="n">iou_corr_single_objective</span><span class="p">(</span><span class="n">trial</span><span class="p">,</span> <span class="n">sdata</span><span class="p">,</span> <span class="n">registration_channels</span><span class="p">,</span> <span class="n">moving_image</span> <span class="o">=</span> <span class="s1">&#39;IMC&#39;</span><span class="p">,</span> <span class="n">static_image</span> <span class="o">=</span> <span class="s1">&#39;IF_rescaled&#39;</span><span class="p">),</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[I 2025-05-30 18:29:35,341] Trial 0 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.933211670587485, &#39;IF_gaussian_sigma&#39;: 3.970471856959729, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 82.24156916480698, &#39;IMC_winsorization_lower_limit&#39;: 0.09696780729863419, &#39;IMC_winsorization_upper_limit&#39;: 0.1783479041671231, &#39;IMC_binarization_threshold&#39;: 0.8096163889460634, &#39;IMC_gaussian_sigma&#39;: 0.08971807860817027, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 0 with value: 0.0.
+[I 2025-05-30 18:29:35,570] Trial 1 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.8268084153290103, &#39;IF_gaussian_sigma&#39;: 4.500237321883176, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 49.28179415212745, &#39;IMC_winsorization_lower_limit&#39;: 0.12881211103925472, &#39;IMC_winsorization_upper_limit&#39;: 0.02522637646225481, &#39;IMC_binarization_threshold&#39;: 0.1124207087973852, &#39;IMC_gaussian_sigma&#39;: 3.0800572032355618, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 0 with value: 0.0.
+[I 2025-05-30 18:29:40,773] Trial 2 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.20949664736336693, &#39;IF_gaussian_sigma&#39;: 1.3644956904032257, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 92.33914120927498, &#39;IMC_winsorization_lower_limit&#39;: 0.16015040101466327, &#39;IMC_winsorization_upper_limit&#39;: 0.0023365688957411204, &#39;IMC_binarization_threshold&#39;: 0.11785527454894162, &#39;IMC_gaussian_sigma&#39;: 0.08167484079027343, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 0 with value: 0.0.
+[I 2025-05-30 18:29:45,598] Trial 3 finished with value: 0.4698028125311363 and parameters: {&#39;IF_binarization_threshold&#39;: 0.12803552354837922, &#39;IF_gaussian_sigma&#39;: 3.6445753998738195, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 29.733724325035354, &#39;IMC_winsorization_lower_limit&#39;: 0.19519762421497946, &#39;IMC_winsorization_upper_limit&#39;: 0.06395929638732445, &#39;IMC_binarization_threshold&#39;: 0.8400581824759289, &#39;IMC_gaussian_sigma&#39;: 3.961087608669278, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:29:47,103] Trial 4 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.45060037393377284, &#39;IF_gaussian_sigma&#39;: 1.6093481462475911, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 47.246045187461974, &#39;IMC_winsorization_lower_limit&#39;: 0.033128687157303126, &#39;IMC_winsorization_upper_limit&#39;: 0.020414803008475136, &#39;IMC_binarization_threshold&#39;: 0.12890852228165572, &#39;IMC_gaussian_sigma&#39;: 1.0218265075202053, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:00,504] Trial 5 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.08168951043352457, &#39;IF_gaussian_sigma&#39;: 1.1528651567460835, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 61.381879739596414, &#39;IMC_winsorization_lower_limit&#39;: 0.09380393616435212, &#39;IMC_winsorization_upper_limit&#39;: 0.17591167211922293, &#39;IMC_binarization_threshold&#39;: 0.2595042643451416, &#39;IMC_gaussian_sigma&#39;: 0.8225699044897111, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:03,030] Trial 6 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.7641429128807489, &#39;IF_gaussian_sigma&#39;: 0.3932598896899492, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 56.99016211399242, &#39;IMC_winsorization_lower_limit&#39;: 0.07301024747769538, &#39;IMC_winsorization_upper_limit&#39;: 0.08195995856107473, &#39;IMC_binarization_threshold&#39;: 0.3049872292385296, &#39;IMC_gaussian_sigma&#39;: 0.2881221705091114, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:03,210] Trial 7 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.9646867538180126, &#39;IF_gaussian_sigma&#39;: 1.625422966142337, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 17.071998859899278, &#39;IMC_winsorization_lower_limit&#39;: 0.16647183620582806, &#39;IMC_winsorization_upper_limit&#39;: 0.0053750219355849895, &#39;IMC_binarization_threshold&#39;: 0.7578883567508103, &#39;IMC_gaussian_sigma&#39;: 0.8659325340793106, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:06,229] Trial 8 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.3116169484160014, &#39;IF_gaussian_sigma&#39;: 1.403952129937417, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 4.090971727970644, &#39;IMC_winsorization_lower_limit&#39;: 0.17896723594254282, &#39;IMC_winsorization_upper_limit&#39;: 0.10426820931331392, &#39;IMC_binarization_threshold&#39;: 0.2073560838302655, &#39;IMC_gaussian_sigma&#39;: 4.78542874606788, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:07,688] Trial 9 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.31580996727615873, &#39;IF_gaussian_sigma&#39;: 4.379820976513671, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 6.328106674296607, &#39;IMC_winsorization_lower_limit&#39;: 0.1568694547962824, &#39;IMC_winsorization_upper_limit&#39;: 0.09287751196316739, &#39;IMC_binarization_threshold&#39;: 0.3311222954178791, &#39;IMC_gaussian_sigma&#39;: 2.8391764422987196, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:08,665] Trial 10 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.010056221583625319, &#39;IF_gaussian_sigma&#39;: 3.149113960322229, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 30.253926210145465, &#39;IMC_winsorization_lower_limit&#39;: 0.002353253270908434, &#39;IMC_winsorization_upper_limit&#39;: 0.05816010037008991, &#39;IMC_binarization_threshold&#39;: 0.9898678610210639, &#39;IMC_gaussian_sigma&#39;: 4.358060069689551, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:10,078] Trial 11 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.6582193414578937, &#39;IF_gaussian_sigma&#39;: 3.3720988058941708, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 99.6318998039571, &#39;IMC_winsorization_lower_limit&#39;: 0.12061414202095798, &#39;IMC_winsorization_upper_limit&#39;: 0.19781644066116685, &#39;IMC_binarization_threshold&#39;: 0.6959447969143482, &#39;IMC_gaussian_sigma&#39;: 3.7979461970142414, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:12,502] Trial 12 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.46386320915437385, &#39;IF_gaussian_sigma&#39;: 3.538867929308706, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 77.53594442569396, &#39;IMC_winsorization_lower_limit&#39;: 0.06794566574798702, &#39;IMC_winsorization_upper_limit&#39;: 0.14173929734180624, &#39;IMC_binarization_threshold&#39;: 0.9775347569057904, &#39;IMC_gaussian_sigma&#39;: 1.8260357642469311, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:12,757] Trial 13 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.9922853742060193, &#39;IF_gaussian_sigma&#39;: 2.674795844353602, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 32.60015308042552, &#39;IMC_winsorization_lower_limit&#39;: 0.1983384088496542, &#39;IMC_winsorization_upper_limit&#39;: 0.12996612525960577, &#39;IMC_binarization_threshold&#39;: 0.7336922019686898, &#39;IMC_gaussian_sigma&#39;: 1.8803303322686098, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:14,026] Trial 14 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.5642937347420971, &#39;IF_gaussian_sigma&#39;: 4.9231661626565, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 74.85004728852668, &#39;IMC_winsorization_lower_limit&#39;: 0.12495043785701579, &#39;IMC_winsorization_upper_limit&#39;: 0.05798772978887293, &#39;IMC_binarization_threshold&#39;: 0.5511984260454887, &#39;IMC_gaussian_sigma&#39;: 3.6346637212540065, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:18,710] Trial 15 finished with value: 0.3259846637162093 and parameters: {&#39;IF_binarization_threshold&#39;: 0.2275951866499849, &#39;IF_gaussian_sigma&#39;: 3.8648058245547, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 32.41997165564982, &#39;IMC_winsorization_lower_limit&#39;: 0.08689930718099402, &#39;IMC_winsorization_upper_limit&#39;: 0.14812491358408114, &#39;IMC_binarization_threshold&#39;: 0.8548740781034729, &#39;IMC_gaussian_sigma&#39;: 2.026994505805673, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:21,894] Trial 16 finished with value: -0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.15912918138413512, &#39;IF_gaussian_sigma&#39;: 2.3974581465125726, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 33.26254690634191, &#39;IMC_winsorization_lower_limit&#39;: 0.05794875850091871, &#39;IMC_winsorization_upper_limit&#39;: 0.1305939574574743, &#39;IMC_binarization_threshold&#39;: 0.541856287322811, &#39;IMC_gaussian_sigma&#39;: 2.0983059865424063, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 3 with value: 0.4698028125311363.
+[I 2025-05-30 18:30:26,226] Trial 17 finished with value: 0.48056559136202776 and parameters: {&#39;IF_binarization_threshold&#39;: 0.26564920335227515, &#39;IF_gaussian_sigma&#39;: 2.761828127547157, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 19.188574056004484, &#39;IMC_winsorization_lower_limit&#39;: 0.03765271057520447, &#39;IMC_winsorization_upper_limit&#39;: 0.06356872423831622, &#39;IMC_binarization_threshold&#39;: 0.8699721065219372, &#39;IMC_gaussian_sigma&#39;: 3.4336732069956044, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 17 with value: 0.48056559136202776.
+[I 2025-05-30 18:30:27,596] Trial 18 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.35001073974460406, &#39;IF_gaussian_sigma&#39;: 2.463352761488431, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 17.795234282126998, &#39;IMC_winsorization_lower_limit&#39;: 0.03414372154969392, &#39;IMC_winsorization_upper_limit&#39;: 0.05586916455220992, &#39;IMC_binarization_threshold&#39;: 0.6489239506705231, &#39;IMC_gaussian_sigma&#39;: 3.6768376221982506, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 17 with value: 0.48056559136202776.
+[I 2025-05-30 18:30:28,979] Trial 19 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.101156022531177, &#39;IF_gaussian_sigma&#39;: 3.0701199717675265, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 19.434250939449576, &#39;IMC_winsorization_lower_limit&#39;: 0.03852333555797421, &#39;IMC_winsorization_upper_limit&#39;: 0.03995232547922731, &#39;IMC_binarization_threshold&#39;: 0.869355760309535, &#39;IMC_gaussian_sigma&#39;: 4.305414702579117, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 17 with value: 0.48056559136202776.
+[I 2025-05-30 18:30:33,810] Trial 20 finished with value: 0.49500447761300326 and parameters: {&#39;IF_binarization_threshold&#39;: 0.013120059525636718, &#39;IF_gaussian_sigma&#39;: 2.756975485271538, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 38.9285187836703, &#39;IMC_winsorization_lower_limit&#39;: 0.0007437568861841937, &#39;IMC_winsorization_upper_limit&#39;: 0.07950674894827967, &#39;IMC_binarization_threshold&#39;: 0.4124255701889006, &#39;IMC_gaussian_sigma&#39;: 3.0374948776813113, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 20 with value: 0.49500447761300326.
+[I 2025-05-30 18:30:39,010] Trial 21 finished with value: 0.4196452545685171 and parameters: {&#39;IF_binarization_threshold&#39;: 0.007060656927755275, &#39;IF_gaussian_sigma&#39;: 2.1482431019328754, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 42.151861957764766, &#39;IMC_winsorization_lower_limit&#39;: 0.0021838599328059373, &#39;IMC_winsorization_upper_limit&#39;: 0.07569502769148886, &#39;IMC_binarization_threshold&#39;: 0.42066406250262045, &#39;IMC_gaussian_sigma&#39;: 3.055337814677518, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 20 with value: 0.49500447761300326.
+[I 2025-05-30 18:30:41,098] Trial 22 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.1148498130800595, &#39;IF_gaussian_sigma&#39;: 2.8977352211121947, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 23.06966154283472, &#39;IMC_winsorization_lower_limit&#39;: 0.018393723101273934, &#39;IMC_winsorization_upper_limit&#39;: 0.1033376002491711, &#39;IMC_binarization_threshold&#39;: 0.43419787072061805, &#39;IMC_gaussian_sigma&#39;: 2.57643757372443, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 20 with value: 0.49500447761300326.
+[I 2025-05-30 18:30:43,096] Trial 23 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.2340977129802473, &#39;IF_gaussian_sigma&#39;: 2.0081913578487107, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 39.498751021210396, &#39;IMC_winsorization_lower_limit&#39;: 0.05018262356963195, &#39;IMC_winsorization_upper_limit&#39;: 0.07345353316368232, &#39;IMC_binarization_threshold&#39;: 0.6237240458495262, &#39;IMC_gaussian_sigma&#39;: 4.108188431803914, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 20 with value: 0.49500447761300326.
+[I 2025-05-30 18:30:47,120] Trial 24 finished with value: 0.2978520825321835 and parameters: {&#39;IF_binarization_threshold&#39;: 0.3591972145582696, &#39;IF_gaussian_sigma&#39;: 3.637352324508384, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 11.706155876844232, &#39;IMC_winsorization_lower_limit&#39;: 0.0218983030321333, &#39;IMC_winsorization_upper_limit&#39;: 0.041604140385579316, &#39;IMC_binarization_threshold&#39;: 0.9076454642645414, &#39;IMC_gaussian_sigma&#39;: 3.3763048515129843, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 20 with value: 0.49500447761300326.
+[I 2025-05-30 18:30:52,015] Trial 25 finished with value: 0.44379122532443716 and parameters: {&#39;IF_binarization_threshold&#39;: 0.0673894775167069, &#39;IF_gaussian_sigma&#39;: 4.190058246381531, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 61.25238080961959, &#39;IMC_winsorization_lower_limit&#39;: 0.016583379986700897, &#39;IMC_winsorization_upper_limit&#39;: 0.10924799725900189, &#39;IMC_binarization_threshold&#39;: 0.4358125774744371, &#39;IMC_gaussian_sigma&#39;: 4.8581752763666906, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 20 with value: 0.49500447761300326.
+[I 2025-05-30 18:30:56,303] Trial 26 finished with value: 0.6129635918390618 and parameters: {&#39;IF_binarization_threshold&#39;: 0.1598777861898527, &#39;IF_gaussian_sigma&#39;: 2.7878017298754973, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 25.736141205992677, &#39;IMC_winsorization_lower_limit&#39;: 0.1115109835179503, &#39;IMC_winsorization_upper_limit&#39;: 0.08777500667688592, &#39;IMC_binarization_threshold&#39;: 0.7916015953959933, &#39;IMC_gaussian_sigma&#39;: 2.479390152299457, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:30:58,593] Trial 27 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.18137804338502234, &#39;IF_gaussian_sigma&#39;: 2.7443850253603523, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 23.525103616914556, &#39;IMC_winsorization_lower_limit&#39;: 0.13560169718519047, &#39;IMC_winsorization_upper_limit&#39;: 0.11882285642046075, &#39;IMC_binarization_threshold&#39;: 0.5045709440158614, &#39;IMC_gaussian_sigma&#39;: 2.42269351879898, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:31:01,591] Trial 28 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.26482599990592526, &#39;IF_gaussian_sigma&#39;: 2.027515725503886, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 11.136682730609353, &#39;IMC_winsorization_lower_limit&#39;: 0.11086721321416342, &#39;IMC_winsorization_upper_limit&#39;: 0.0880866066049919, &#39;IMC_binarization_threshold&#39;: 0.5991508222826513, &#39;IMC_gaussian_sigma&#39;: 1.440331829257788, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:31:03,183] Trial 29 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.565805458257713, &#39;IF_gaussian_sigma&#39;: 0.7000852420032486, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 41.50222328997258, &#39;IMC_winsorization_lower_limit&#39;: 0.07988733422776645, &#39;IMC_winsorization_upper_limit&#39;: 0.043601919832882065, &#39;IMC_binarization_threshold&#39;: 0.7860012619480009, &#39;IMC_gaussian_sigma&#39;: 3.3119906399494523, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:31:04,435] Trial 30 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.3989098631981137, &#39;IF_gaussian_sigma&#39;: 3.2957191232427787, &#39;IMC_arcsinh_normalize&#39;: True, &#39;IMC_arcsinh_cofactor&#39;: 25.603565029583866, &#39;IMC_winsorization_lower_limit&#39;: 0.10841579274358995, &#39;IMC_winsorization_upper_limit&#39;: 0.09087822014969564, &#39;IMC_binarization_threshold&#39;: 0.008126562674202753, &#39;IMC_gaussian_sigma&#39;: 2.6488462687153653, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:31:05,981] Trial 31 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.14105781235503878, &#39;IF_gaussian_sigma&#39;: 3.8217655873210603, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 37.39745202510719, &#39;IMC_winsorization_lower_limit&#39;: 0.04791305732149505, &#39;IMC_winsorization_upper_limit&#39;: 0.07045214624534286, &#39;IMC_binarization_threshold&#39;: 0.9338459607837258, &#39;IMC_gaussian_sigma&#39;: 3.9682948761774317, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:31:08,998] Trial 32 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.03931066082320098, &#39;IF_gaussian_sigma&#39;: 2.909233462290834, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 27.554699192947858, &#39;IMC_winsorization_lower_limit&#39;: 0.1961988334413037, &#39;IMC_winsorization_upper_limit&#39;: 0.06642565058981634, &#39;IMC_binarization_threshold&#39;: 0.8244218823218079, &#39;IMC_gaussian_sigma&#39;: 3.2814767369733326, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 26 with value: 0.6129635918390618.
+[I 2025-05-30 18:31:13,606] Trial 33 finished with value: 0.6413005292167133 and parameters: {&#39;IF_binarization_threshold&#39;: 0.16195929979150478, &#39;IF_gaussian_sigma&#39;: 2.347222118247061, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 52.669050432769026, &#39;IMC_winsorization_lower_limit&#39;: 0.1445489179069131, &#39;IMC_winsorization_upper_limit&#39;: 0.04965021533751028, &#39;IMC_binarization_threshold&#39;: 0.6963577977550832, &#39;IMC_gaussian_sigma&#39;: 2.311329941756081, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:17,611] Trial 34 finished with value: 0.49670583570128457 and parameters: {&#39;IF_binarization_threshold&#39;: 0.2872516542876298, &#39;IF_gaussian_sigma&#39;: 2.469338472930849, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 51.85124109750328, &#39;IMC_winsorization_lower_limit&#39;: 0.14070087556448427, &#39;IMC_winsorization_upper_limit&#39;: 0.02400041985823534, &#39;IMC_binarization_threshold&#39;: 0.7027878449745112, &#39;IMC_gaussian_sigma&#39;: 2.2861502135333285, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:21,825] Trial 35 finished with value: 0.5845455161204896 and parameters: {&#39;IF_binarization_threshold&#39;: 0.16869648314366822, &#39;IF_gaussian_sigma&#39;: 2.140298827486788, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 54.360418882819815, &#39;IMC_winsorization_lower_limit&#39;: 0.1409499249440549, &#39;IMC_winsorization_upper_limit&#39;: 0.025956856393035355, &#39;IMC_binarization_threshold&#39;: 0.6586532663589644, &#39;IMC_gaussian_sigma&#39;: 2.264263209505864, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:25,918] Trial 36 finished with value: 0.5092134390593994 and parameters: {&#39;IF_binarization_threshold&#39;: 0.18952094720689833, &#39;IF_gaussian_sigma&#39;: 2.2610346419677874, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 53.45184457586226, &#39;IMC_winsorization_lower_limit&#39;: 0.14228721151454315, &#39;IMC_winsorization_upper_limit&#39;: 0.017695632602341076, &#39;IMC_binarization_threshold&#39;: 0.675821873333952, &#39;IMC_gaussian_sigma&#39;: 2.2546961038443736, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:30,519] Trial 37 finished with value: 0.4766227482106362 and parameters: {&#39;IF_binarization_threshold&#39;: 0.19044758935722467, &#39;IF_gaussian_sigma&#39;: 1.8291895689901712, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 66.38700715822995, &#39;IMC_winsorization_lower_limit&#39;: 0.14965299459392747, &#39;IMC_winsorization_upper_limit&#39;: 0.012470071372920753, &#39;IMC_binarization_threshold&#39;: 0.6663688307635403, &#39;IMC_gaussian_sigma&#39;: 1.5349867288964252, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:31,680] Trial 38 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.8205696370214167, &#39;IF_gaussian_sigma&#39;: 2.196195502014332, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 49.00802667424148, &#39;IMC_winsorization_lower_limit&#39;: 0.17400657565771346, &#39;IMC_winsorization_upper_limit&#39;: 0.030958292399450874, &#39;IMC_binarization_threshold&#39;: 0.5917672742803289, &#39;IMC_gaussian_sigma&#39;: 1.428788939317603, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:35,623] Trial 39 finished with value: 0.35132420791355734 and parameters: {&#39;IF_binarization_threshold&#39;: 0.40890346456212967, &#39;IF_gaussian_sigma&#39;: 0.8270080735084813, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 67.1702254268587, &#39;IMC_winsorization_lower_limit&#39;: 0.14609923439125413, &#39;IMC_winsorization_upper_limit&#39;: 0.014185348386767077, &#39;IMC_binarization_threshold&#39;: 0.7677878203765123, &#39;IMC_gaussian_sigma&#39;: 2.8063865067231153, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:40,122] Trial 40 finished with value: 0.4364260867771481 and parameters: {&#39;IF_binarization_threshold&#39;: 0.08432447597369841, &#39;IF_gaussian_sigma&#39;: 1.6563786291983296, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 53.25171757033678, &#39;IMC_winsorization_lower_limit&#39;: 0.10107209172312834, &#39;IMC_winsorization_upper_limit&#39;: 0.03276156354923886, &#39;IMC_binarization_threshold&#39;: 0.7217563080789836, &#39;IMC_gaussian_sigma&#39;: 1.7061885459602801, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:44,224] Trial 41 finished with value: 0.5112152008839959 and parameters: {&#39;IF_binarization_threshold&#39;: 0.2682405496714012, &#39;IF_gaussian_sigma&#39;: 2.543842227123359, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 55.26507079295737, &#39;IMC_winsorization_lower_limit&#39;: 0.13698637192836535, &#39;IMC_winsorization_upper_limit&#39;: 0.023948613405204405, &#39;IMC_binarization_threshold&#39;: 0.6836447335848829, &#39;IMC_gaussian_sigma&#39;: 2.2733985916924406, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:45,676] Trial 42 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.232442289547455, &#39;IF_gaussian_sigma&#39;: 2.3124184547135687, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 56.15005715256824, &#39;IMC_winsorization_lower_limit&#39;: 0.13254628490969586, &#39;IMC_winsorization_upper_limit&#39;: 0.0019631999485978276, &#39;IMC_binarization_threshold&#39;: 0.7942697974019389, &#39;IMC_gaussian_sigma&#39;: 2.237129126456622, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 33 with value: 0.6413005292167133.
+[I 2025-05-30 18:31:50,527] Trial 43 finished with value: 0.6452717822270486 and parameters: {&#39;IF_binarization_threshold&#39;: 0.1512829279272145, &#39;IF_gaussian_sigma&#39;: 1.3874555822749557, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 46.38314977238214, &#39;IMC_winsorization_lower_limit&#39;: 0.158902431621469, &#39;IMC_winsorization_upper_limit&#39;: 0.05007657039379224, &#39;IMC_binarization_threshold&#39;: 0.6750809806151257, &#39;IMC_gaussian_sigma&#39;: 1.1813860222072852, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 43 with value: 0.6452717822270486.
+[I 2025-05-30 18:31:55,319] Trial 44 finished with value: 0.6526415943925467 and parameters: {&#39;IF_binarization_threshold&#39;: 0.14055633731267614, &#39;IF_gaussian_sigma&#39;: 1.2547537115861847, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 45.46181262714963, &#39;IMC_winsorization_lower_limit&#39;: 0.16133138741487346, &#39;IMC_winsorization_upper_limit&#39;: 0.049350827068444396, &#39;IMC_binarization_threshold&#39;: 0.6210991405573469, &#39;IMC_gaussian_sigma&#39;: 1.1854010829079855, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 44 with value: 0.6526415943925467.
+[I 2025-05-30 18:32:08,259] Trial 45 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.13805375817013918, &#39;IF_gaussian_sigma&#39;: 1.3495268956345272, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 44.36812805691621, &#39;IMC_winsorization_lower_limit&#39;: 0.16071420842719433, &#39;IMC_winsorization_upper_limit&#39;: 0.05084292638083324, &#39;IMC_binarization_threshold&#39;: 0.5740761155413241, &#39;IMC_gaussian_sigma&#39;: 0.3919575433582825, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 44 with value: 0.6526415943925467.
+[I 2025-05-30 18:32:13,520] Trial 46 finished with value: 0.5797096729585938 and parameters: {&#39;IF_binarization_threshold&#39;: 0.05134767936535489, &#39;IF_gaussian_sigma&#39;: 0.11996442908061855, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 46.90128001437719, &#39;IMC_winsorization_lower_limit&#39;: 0.18461812293912463, &#39;IMC_winsorization_upper_limit&#39;: 0.0491630431584474, &#39;IMC_binarization_threshold&#39;: 0.501278068821149, &#39;IMC_gaussian_sigma&#39;: 1.2079908611947792, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 44 with value: 0.6526415943925467.
+[I 2025-05-30 18:32:18,211] Trial 47 finished with value: 0.5779111063518994 and parameters: {&#39;IF_binarization_threshold&#39;: 0.13845766677942714, &#39;IF_gaussian_sigma&#39;: 1.0149848882513304, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 62.68766238047135, &#39;IMC_winsorization_lower_limit&#39;: 0.1692745885413007, &#39;IMC_winsorization_upper_limit&#39;: 0.033738718554848335, &#39;IMC_binarization_threshold&#39;: 0.7417385370151532, &#39;IMC_gaussian_sigma&#39;: 0.8198469679087235, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 44 with value: 0.6526415943925467.
+[I 2025-05-30 18:32:28,621] Trial 48 finished with value: 0.0 and parameters: {&#39;IF_binarization_threshold&#39;: 0.2133936772332895, &#39;IF_gaussian_sigma&#39;: 1.1839771806320663, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 87.19367846157502, &#39;IMC_winsorization_lower_limit&#39;: 0.15341978150827612, &#39;IMC_winsorization_upper_limit&#39;: 0.1602812177460857, &#39;IMC_binarization_threshold&#39;: 0.6303848114057606, &#39;IMC_gaussian_sigma&#39;: 0.541016936903354, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 44 with value: 0.6526415943925467.
+[I 2025-05-30 18:32:33,211] Trial 49 finished with value: 0.33115497979530734 and parameters: {&#39;IF_binarization_threshold&#39;: 0.3344943891776251, &#39;IF_gaussian_sigma&#39;: 1.8440745722225729, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 46.54772576489543, &#39;IMC_winsorization_lower_limit&#39;: 0.11917764947096415, &#39;IMC_winsorization_upper_limit&#39;: 0.04735250782719269, &#39;IMC_binarization_threshold&#39;: 0.8151152667917122, &#39;IMC_gaussian_sigma&#39;: 1.1327178980100732, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}. Best is trial 44 with value: 0.6526415943925467.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pick-best-trial">
+<h2>Pick best trial<a class="headerlink" href="#pick-best-trial" title="Link to this heading"></a></h2>
+<p>We can checkout the parameters selected for the best trial
+Twocan suggests the best trial based on the balanced score, this is not necessarily the same trial as that which maximizes the optimization objectives: this can be extracted with the optuna method <code class="docutils literal notranslate"><span class="pre">study.best_trial</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optuna_best_trial</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">best_trial</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optuna_best_trial</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FrozenTrial(number=44, state=TrialState.COMPLETE, values=[0.6526415943925467], datetime_start=datetime.datetime(2025, 5, 30, 18, 31, 50, 529365), datetime_complete=datetime.datetime(2025, 5, 30, 18, 31, 55, 319088), params={&#39;IF_binarization_threshold&#39;: 0.14055633731267614, &#39;IF_gaussian_sigma&#39;: 1.2547537115861847, &#39;IMC_arcsinh_normalize&#39;: False, &#39;IMC_arcsinh_cofactor&#39;: 45.46181262714963, &#39;IMC_winsorization_lower_limit&#39;: 0.16133138741487346, &#39;IMC_winsorization_upper_limit&#39;: 0.049350827068444396, &#39;IMC_binarization_threshold&#39;: 0.6210991405573469, &#39;IMC_gaussian_sigma&#39;: 1.1854010829079855, &#39;binarize_images&#39;: True, &#39;registration_max_features&#39;: 100000, &#39;registration_percentile&#39;: 0.9, &#39;moving_image&#39;: &#39;IMC&#39;, &#39;static_image&#39;: &#39;IF_rescaled&#39;}, user_attrs={&#39;registration_matrix&#39;: array([[ 9.95031054e-01,  1.25336820e-03, -4.52149509e+01],
+       [-1.25336820e-03,  9.95031054e-01, -3.89747629e+01]]), &#39;source_sum&#39;: 39953, &#39;target_sum&#39;: 38512, &#39;logical_and&#39;: 33675, &#39;logical_or&#39;: 44790, &#39;logical_xor&#39;: 11115, &#39;logical_iou&#39;: 0.7518419290020094, &#39;stack_image_max_corr&#39;: 0.8680569268846966, &#39;reg_image_max_corr&#39;: 0.8680569268846968, &#39;stack_cell_max_corr&#39;: 0.5409464665823187, &#39;reg_cell_max_corr&#39;: 0.5409464665823185}, system_attrs={}, intermediate_values={}, distributions={&#39;IF_binarization_threshold&#39;: FloatDistribution(high=1.0, log=False, low=0.0, step=None), &#39;IF_gaussian_sigma&#39;: FloatDistribution(high=5.0, log=False, low=0.0, step=None), &#39;IMC_arcsinh_normalize&#39;: CategoricalDistribution(choices=(True, False)), &#39;IMC_arcsinh_cofactor&#39;: FloatDistribution(high=100.0, log=False, low=1.0, step=None), &#39;IMC_winsorization_lower_limit&#39;: FloatDistribution(high=0.2, log=False, low=0.0, step=None), &#39;IMC_winsorization_upper_limit&#39;: FloatDistribution(high=0.2, log=False, low=0.0, step=None), &#39;IMC_binarization_threshold&#39;: FloatDistribution(high=1.0, log=False, low=0.0, step=None), &#39;IMC_gaussian_sigma&#39;: FloatDistribution(high=5.0, log=False, low=0.0, step=None), &#39;binarize_images&#39;: CategoricalDistribution(choices=(True,)), &#39;registration_max_features&#39;: CategoricalDistribution(choices=(100000,)), &#39;registration_percentile&#39;: CategoricalDistribution(choices=(0.9,)), &#39;moving_image&#39;: CategoricalDistribution(choices=(&#39;IMC&#39;,)), &#39;static_image&#39;: CategoricalDistribution(choices=(&#39;IF_rescaled&#39;,))}, trial_id=44, value=None)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twocan_best_trial</span> <span class="o">=</span> <span class="n">pick_best_registration</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">trials_dataframe</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">twocan_best_trial</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number                                                                                 44
+value                                                                            0.652642
+datetime_start                                                 2025-05-30 18:31:50.529365
+datetime_complete                                              2025-05-30 18:31:55.319088
+duration                                                           0 days 00:00:04.789723
+params_IF_binarization_threshold                                                 0.140556
+params_IF_gaussian_sigma                                                         1.254754
+params_IMC_arcsinh_cofactor                                                     45.461813
+params_IMC_arcsinh_normalize                                                        False
+params_IMC_binarization_threshold                                                0.621099
+params_IMC_gaussian_sigma                                                        1.185401
+params_IMC_winsorization_lower_limit                                             0.161331
+params_IMC_winsorization_upper_limit                                             0.049351
+params_binarize_images                                                               True
+params_moving_image                                                                   IMC
+params_registration_max_features                                                   100000
+params_registration_percentile                                                        0.9
+params_static_image                                                           IF_rescaled
+user_attrs_logical_and                                                            33675.0
+user_attrs_logical_iou                                                           0.751842
+user_attrs_logical_or                                                             44790.0
+user_attrs_logical_xor                                                            11115.0
+user_attrs_prop_source_covered                                                        NaN
+user_attrs_prop_target_covered                                                        NaN
+user_attrs_reg_cell_max_corr                                                     0.540946
+user_attrs_reg_image_max_corr                                                    0.868057
+user_attrs_registration_matrix          [[0.9950310537840523, 0.0012533682037721098, -...
+user_attrs_source_sum                                                             39953.0
+user_attrs_stack_cell_max_corr                                                   0.540946
+user_attrs_stack_image_max_corr                                                  0.868057
+user_attrs_target_sum                                                             38512.0
+state                                                                            COMPLETE
+norm_and                                                                         0.918925
+norm_iou                                                                         0.751842
+norm_corr                                                                        0.868057
+balanced_score                                                                   0.713736
+Name: 44, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also check out the registration matrix</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twocan_best_trial</span><span class="p">[</span><span class="s1">&#39;user_attrs_registration_matrix&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  1.  ,   0.  , -45.21],
+       [ -0.  ,   1.  , -38.97]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualize-result">
+<h2>Visualize result<a class="headerlink" href="#visualize-result" title="Link to this heading"></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_registration</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">],</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IMC&#39;</span><span class="p">],</span> <span class="n">twocan_best_trial</span><span class="p">[</span><span class="s1">&#39;user_attrs_registration_matrix&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Registration&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e00e13c5da4d4319da33d955165a20c63e2d8b1ccca0b7e4ca8500105033599c.png" src="../_images/e00e13c5da4d4319da33d955165a20c63e2d8b1ccca0b7e4ca8500105033599c.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="register">
+<h1>Register!<a class="headerlink" href="#register" title="Link to this heading"></a></h1>
+<p>Assuming we’ve found a suitable registration matrix using Twocan, we can apply this to transform our moving image to align with the static image.</p>
+<p>We’ll show two ways to do this:</p>
+<ol class="arabic simple">
+<li><p>SpatialData</p></li>
+<li><p>skimage</p></li>
+</ol>
+<section id="recommendations">
+<h2>Recommendations<a class="headerlink" href="#recommendations" title="Link to this heading"></a></h2>
+<p>Use SpatialData when:</p>
+<ul class="simple">
+<li><p>You’re working with spatial omics data (spatial transcriptomics, proteomics, etc.)</p></li>
+<li><p>Data integrity and preservation of original resolutions is critical</p></li>
+<li><p>You plan to integrate with single-cell analysis workflows</p></li>
+<li><p>You can tolerate some API instability for the benefits of a purpose-built solution</p></li>
+</ul>
+<p>Use skimage when:</p>
+<ul class="simple">
+<li><p>You need direct image manipulation and standard computer vision workflows
+Visualization flexibility is a priority</p></li>
+<li><p>You’re comfortable with resampling trade-offs</p></li>
+<li><p>You need to export standard image formats for use in other tools</p></li>
+<li><p>You’re working primarily with imaging data rather than omics data</p></li>
+</ul>
+<p>You can of course mix and match when you use each approach: SpatialData stores images such that they can always be turned into numpy arrays, so we recommend keeping raw data in zarrs, and transforming on the fly whenever a numpy array or tiff is needed.</p>
+<p>For more info, see https://spatialdata.scverse.org/en/stable/tutorials/notebooks/notebooks/examples/transformations_advanced.html</p>
+</section>
+<section id="spatialdata">
+<h2>SpatialData<a class="headerlink" href="#spatialdata" title="Link to this heading"></a></h2>
+<section id="pros">
+<h3>Pros:<a class="headerlink" href="#pros" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Integrated with AnnData ecosystem: Seamlessly works with single-cell and spatial omics analysis pipelines, making it ideal for spatial transcriptomics, proteomics, and other omics data types</p></li>
+<li><p>Maintains original image resolutions: Stores transformation matrices separately rather than resampling images, preserving the native resolution and pixel spacing of each modality</p></li>
+<li><p>Preserves data integrity: By applying transformations only during analysis rather than to the raw data, it avoids introducing interpolation artifacts or information loss</p></li>
+<li><p>Supports multiple coordinate systems: Can handle complex transformations and maintain relationships between different spatial coordinate systems</p></li>
+<li><p>Designed for spatial omics workflows: Built specifically with spatial biology applications in mind, supporting common data types and analysis patterns</p></li>
+</ul>
+</section>
+<section id="cons">
+<h3>Cons:<a class="headerlink" href="#cons" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Relatively new library with evolving API: As of May 2025, under active development, which means breaking changes are possible and documentation may be incomplete</p></li>
+<li><p>Learning curve: Helpful to have some familiarity with the SpatialData/AnnData ecosystem</p></li>
+</ul>
+</section>
+<section id="transform">
+<h3>Transform<a class="headerlink" href="#transform" title="Link to this heading"></a></h3>
+<p>First we’ll use the transformation matrix found by Twocan to make a SpatialData affine transform, then we’ll write that to the coordinate system in the sdata called ‘aligned’</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">twocan_best_trial</span><span class="p">[</span><span class="s1">&#39;user_attrs_registration_matrix&#39;</span><span class="p">]</span>
+<span class="n">affine</span> <span class="o">=</span> <span class="n">Affine</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">M</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])]),</span> <span class="n">input_axes</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="n">output_axes</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">))</span>
+<span class="n">get_aligned_coordinates</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IMC&#39;</span><span class="p">],</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">],</span> <span class="n">affine</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /lila/home/harrigan/repair-quant/twocan_repo/notebooks/data/cell-line-0028-bd18455.zarr
+└── Images
+      ├── &#39;IF&#39;: DataArray[cyx] (3, 512, 512)
+      ├── &#39;IF_rescaled&#39;: DataArray[cyx] (3, 878, 878)
+      └── &#39;IMC&#39;: DataArray[cyx] (24, 944, 953)
+with coordinate systems:
+    ▸ &#39;aligned&#39;, with elements:
+        IMC (Images)
+    ▸ &#39;global&#39;, with elements:
+        IF (Images), IF_rescaled (Images), IMC (Images)
+with the following elements not in the Zarr store:
+    ▸ IF_rescaled (Images)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualize-the-transformation">
+<h3>Visualize the transformation<a class="headerlink" href="#visualize-the-transformation" title="Link to this heading"></a></h3>
+<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">render_images</span></code> function to visualize the transformation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DAPI&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;IF: DAPI&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IMC&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DNA1&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">AsinhNorm</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;aligned&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;IMC: Arcsinh transformed DNA1&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DAPI&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;IMC&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;DNA1&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">AsinhNorm</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;aligned&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Merge&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2876c7b38ba71ed199594c96cf28100154041f58ad7daee1c39479947885d050.png" src="../_images/2876c7b38ba71ed199594c96cf28100154041f58ad7daee1c39479947885d050.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="skimage-numpy">
+<h2>Skimage/numpy<a class="headerlink" href="#skimage-numpy" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Pros:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Direct manipulation of image arrays: Provides immediate access to pixel data as numpy arrays, allowing for straightforward image processing operations</p></li>
+<li><p>Flexible for visualization and plotting: Use matplotlib for custom plots</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Cons:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Requires resampling: Forces at least one modality to be transformed to match the resolution of another, which is often necessary but not always desirable</p></li>
+<li><p>Potential information loss: Resampling introduces interpolation artifacts and may lose fine spatial details, especially when downsampling high-resolution images</p></li>
+<li><p>Poor handling of irregular regions: NumPy arrays are rectangular, so handling ragged edges, circular regions, or other non-rectangular areas requires masking and can be cumbersome</p></li>
+<li><p>Metadata loss: Standard image formats like TIFF may not preserve all the spatial metadata, coordinate system information, or transformation history</p></li>
+<li><p>Memory intensive: Storing multiple resampled high-resolution images can consume significant memory</p></li>
+</ul>
+</section>
+<section id="apply-the-transformation">
+<h3>Apply the transformation<a class="headerlink" href="#apply-the-transformation" title="Link to this heading"></a></h3>
+<p>We will “stack” the IMC image on top of IF to create one big numpy array with 3 + 24 channels</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg</span> <span class="o">=</span> <span class="n">RegEstimator</span><span class="p">()</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">M_</span> <span class="o">=</span> <span class="n">twocan_best_trial</span><span class="p">[</span><span class="s1">&#39;user_attrs_registration_matrix&#39;</span><span class="p">]</span>
+
+<span class="n">stack</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IMC&#39;</span><span class="p">],</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">])</span>
+<span class="n">stack</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(27, 878, 878)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have to store channel names separately</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stack_channels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IMC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Make a cartoon of the registration</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_registration</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IF_rescaled&#39;</span><span class="p">],</span> <span class="n">sdata</span><span class="p">[</span><span class="s1">&#39;IMC&#39;</span><span class="p">],</span> <span class="n">twocan_best_trial</span><span class="p">[</span><span class="s1">&#39;user_attrs_registration_matrix&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Registration&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/aeaed011d619308bfbebfcd460faeefc86befa79b1016f4d95de25d4c779f450.png" src="../_images/aeaed011d619308bfbebfcd460faeefc86befa79b1016f4d95de25d4c779f450.png" />
+</div>
+</div>
+<p>Show the transformed data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stack</span><span class="p">[</span><span class="n">stack_channels</span> <span class="o">==</span> <span class="s1">&#39;DNA1&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(878, 878)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">green</span><span class="p">,</span> <span class="n">magenta</span><span class="p">,</span> <span class="n">merge</span> <span class="o">=</span> <span class="n">get_merge</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="n">stack_channels</span> <span class="o">==</span> <span class="s1">&#39;DNA1&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="n">stack</span><span class="p">[</span><span class="n">stack_channels</span> <span class="o">==</span> <span class="s1">&#39;DAPI&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">magenta</span><span class="p">)</span> 
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;IF: DAPI&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">green</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;IMC: arcsinh transformed DNA1&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">merge</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Merge&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5df92911d42090e28ff3e83e5218c776ebc6486d3d6c509c3b9881de0f89a176.png" src="../_images/5df92911d42090e28ff3e83e5218c776ebc6486d3d6c509c3b9881de0f89a176.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../concepts.html" class="btn btn-neutral float-left" title="Core Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

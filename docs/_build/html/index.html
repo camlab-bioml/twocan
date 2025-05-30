@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twocan Documentation &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/01_basic_registration.html">Basic registration with Twocan defaults</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/01_basic_registration.html#register">Register!</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Twocan Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="twocan-documentation">
+<h1>Twocan Documentation<a class="headerlink" href="#twocan-documentation" title="Link to this heading"></a></h1>
+<p><em>A Bayesian optimization framework for multimodal registration of highly multiplexed single-cell spatial proteomics data</em></p>
+<a class="reference internal image-reference" href="https://github.com/user-attachments/assets/1cad2a1e-ca87-474e-96de-fd6b02560771"><img alt="https://github.com/user-attachments/assets/1cad2a1e-ca87-474e-96de-fd6b02560771" class="align-center" src="https://github.com/user-attachments/assets/1cad2a1e-ca87-474e-96de-fd6b02560771" style="width: 100px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Twocan is a Python package that uses Bayesian optimization (via Optuna) to automatically find optimal parameters for registering images from different spatial proteomics technologies like IF (Immunofluorescence), IMC (Imaging Mass Cytometry), FISH, and IMS.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-from-source">Installing from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-from-pypi">Installing from PyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#what-is-twocan">What is Twocan?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#basic-workflow">Basic Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#your-first-registration">Your First Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#understanding-the-results">Understanding the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#sample-use-cases">Sample Use Cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#getting-help">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#tips-for-success">Tips for Success</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#what-is-multimodal-image-registration">What is Multimodal Image Registration?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#bayesian-optimization-approach">Bayesian Optimization Approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#the-registration-pipeline">The Registration Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#parameter-optimization-defaults">Parameter Optimization (Defaults)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#objective-functions">Objective Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#when-to-use-twocan">When to Use Twocan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#limitations-and-considerations">Limitations and Considerations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/01_basic_registration.html">Basic registration with Twocan defaults</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#load-data">Load data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#run-optimization-to-find-the-best-registration-parameters">Run optimization to find the best registration parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#pick-best-trial">Pick best trial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#visualize-result">Visualize result</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/01_basic_registration.html#register">Register!</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#recommendations">Recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#spatialdata">SpatialData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_basic_registration.html#skimage-numpy">Skimage/numpy</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#preprocessors">Preprocessors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#optimization-functions">Optimization Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#plotting">Plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#module-twocan">Complete API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Automated parameter optimization</strong> using Bayesian optimization</p></li>
+<li><p><strong>Multiple imaging modalities</strong> support (IF, IMC, FISH, IMS)</p></li>
+<li><p><strong>Scikit-learn compatible</strong> API for easy integration</p></li>
+<li><p><strong>Flexible preprocessing</strong> with modality-specific processors</p></li>
+<li><p><strong>Quality metrics</strong> for registration assessment</p></li>
+<li><p><strong>Extensible design</strong> for custom objectives and preprocessors</p></li>
+</ul>
+</section>
+<section id="quick-example">
+<h2>Quick Example<a class="headerlink" href="#quick-example" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">optuna</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twocan</span><span class="w"> </span><span class="kn">import</span> <span class="n">IFProcessor</span><span class="p">,</span> <span class="n">IMCProcessor</span><span class="p">,</span> <span class="n">iou_corr_single_objective</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_zarr</span>
+
+<span class="c1"># Load your spatial data</span>
+<span class="n">images</span> <span class="o">=</span> <span class="n">read_zarr</span><span class="p">(</span><span class="s1">&#39;path/to/your/data.zarr&#39;</span><span class="p">)</span>
+
+<span class="c1"># Setup optimization</span>
+<span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">)</span>
+
+<span class="c1"># Register images</span>
+<span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">trial</span><span class="p">:</span> <span class="n">iou_corr_single_objective</span><span class="p">(</span>
+        <span class="n">trial</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span>
+        <span class="n">registration_channels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DAPI&#39;</span><span class="p">,</span> <span class="s1">&#39;DNA1&#39;</span><span class="p">,</span> <span class="s1">&#39;DNA2&#39;</span><span class="p">],</span>
+        <span class="n">moving_image</span><span class="o">=</span><span class="s1">&#39;IMC&#39;</span><span class="p">,</span>
+        <span class="n">static_image</span><span class="o">=</span><span class="s1">&#39;IF&#39;</span>
+    <span class="p">),</span>
+    <span class="n">n_trials</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

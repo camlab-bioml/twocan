@@ -1,0 +1,28 @@
+# Include essential package files
+include README.md
+include LICENSE
+include pyproject.toml
+include environment.yml
+
+# Include package source code
+recursive-include twocan *.py
+
+# Exclude large directories that aren't needed for package installation
+global-exclude examples/*
+global-exclude notebooks/*
+global-exclude .git/*
+global-exclude .ipynb_checkpoints/*
+global-exclude .pytest_cache/*
+global-exclude __pycache__/*
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude build/*
+global-exclude dist/*
+global-exclude *.egg-info/*
+global-exclude .DS_Store
+global-exclude Thumbs.db
+
+# Include documentation source files (but not build artifacts)
+recursive-include docs *.py *.rst *.md *.txt
+recursive-include docs Makefile
+prune docs/_build 

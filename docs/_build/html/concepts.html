@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Concepts &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials/index.html" />
+    <link rel="prev" title="Quickstart Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-multimodal-image-registration">What is Multimodal Image Registration?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bayesian-optimization-approach">Bayesian Optimization Approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-registration-pipeline">The Registration Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feature-detection-and-matching">Feature Detection and Matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformation-estimation">Transformation Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quality-assessment">Quality Assessment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-optimization-defaults">Parameter Optimization (Defaults)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preprocessing-parameters">Preprocessing Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#registration-parameters">Registration Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#objective-functions">Objective Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multi-objective">Multi Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#single-objective">Single Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-objectives">Custom Objectives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#when-to-use-twocan">When to Use Twocan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#limitations-and-considerations">Limitations and Considerations</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core Concepts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/concepts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-concepts">
+<h1>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h1>
+<p>This section explains the key concepts behind Twocan’s approach to multimodal image registration.</p>
+<section id="what-is-multimodal-image-registration">
+<h2>What is Multimodal Image Registration?<a class="headerlink" href="#what-is-multimodal-image-registration" title="Link to this heading"></a></h2>
+<p>Multimodal image registration is the process of aligning images acquired using different technologies or at different times. In spatial proteomics, this might involve:</p>
+<ul class="simple">
+<li><p><strong>IF (Immunofluorescence)</strong> + <strong>IMC (Imaging Mass Cytometry)</strong> from the same tissue section</p></li>
+<li><p><strong>FISH (Fluorescence in situ hybridization)</strong> cycles from sequential rounds</p></li>
+<li><p><strong>IMS (Ion Mobility Spectrometry)</strong> + <strong>IMC</strong> from serial sections</p></li>
+</ul>
+<p>The challenge is that different technologies have different:</p>
+<ul class="simple">
+<li><p><strong>Resolution</strong>: Pixel sizes and image dimensions</p></li>
+<li><p><strong>Signal characteristics</strong>: Intensity distributions, noise patterns</p></li>
+<li><p><strong>Channel availability</strong>: Different markers and detection methods</p></li>
+</ul>
+</section>
+<section id="bayesian-optimization-approach">
+<h2>Bayesian Optimization Approach<a class="headerlink" href="#bayesian-optimization-approach" title="Link to this heading"></a></h2>
+<p>Traditional registration methods require manual parameter tuning, which is:</p>
+<ul class="simple">
+<li><p><strong>Time-consuming</strong>: Many parameters to optimize</p></li>
+<li><p><strong>Subjective</strong>: Hard to define “good enough” registration</p></li>
+<li><p><strong>Technology-specific</strong>: Different modalities need different approaches</p></li>
+</ul>
+<p>Twocan uses <strong>Bayesian optimization</strong> (via Optuna) to automatically:</p>
+<ol class="arabic simple">
+<li><p><strong>Explore parameter space</strong> efficiently using probabilistic models</p></li>
+<li><p><strong>Balance multiple objectives</strong> (overlap, correlation, feature matching)</p></li>
+<li><p><strong>Converge quickly</strong> to optimal solutions</p></li>
+<li><p><strong>Provide uncertainty estimates</strong> for registration quality</p></li>
+</ol>
+</section>
+<section id="the-registration-pipeline">
+<h2>The Registration Pipeline<a class="headerlink" href="#the-registration-pipeline" title="Link to this heading"></a></h2>
+<p>Twocan’s registration pipeline consists of several stages:</p>
+<section id="preprocessing">
+<h3>Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading"></a></h3>
+<p>Each imaging modality requires specific preprocessing:</p>
+<dl class="simple">
+<dt><strong>IF Images:</strong></dt><dd><ul class="simple">
+<li><p>Scaling for resolution matching</p></li>
+<li><p>Gaussian blurring for noise reduction</p></li>
+<li><p>Binarization for feature extraction</p></li>
+</ul>
+</dd>
+<dt><strong>IMC Images:</strong></dt><dd><ul class="simple">
+<li><p>Arcsinh transformation for variance stabilization</p></li>
+<li><p>Winsorization for outlier handling</p></li>
+<li><p>Gaussian blurring and binarization</p></li>
+</ul>
+</dd>
+<dt><strong>Custom Processors:</strong></dt><dd><p>You can define custom preprocessing for other modalities.</p>
+</dd>
+</dl>
+</section>
+<section id="feature-detection-and-matching">
+<h3>Feature Detection and Matching<a class="headerlink" href="#feature-detection-and-matching" title="Link to this heading"></a></h3>
+<p>Twocan uses OpenCV’s ORB (Oriented FAST and Rotated BRIEF) detector to:</p>
+<ol class="arabic simple">
+<li><p><strong>Detect keypoints</strong> in both preprocessed images</p></li>
+<li><p><strong>Extract descriptors</strong> that are invariant to rotation and scale</p></li>
+<li><p><strong>Match features</strong> between images using Hamming distance</p></li>
+<li><p><strong>Filter matches</strong> keeping only the most confident ones</p></li>
+</ol>
+</section>
+<section id="transformation-estimation">
+<h3>Transformation Estimation<a class="headerlink" href="#transformation-estimation" title="Link to this heading"></a></h3>
+<p>From the matched features, Twocan estimates an <strong>affine transformation</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} + \begin{bmatrix} t_x \\ t_y \end{bmatrix}\end{split}\]</div>
+<p>This transformation handles:</p>
+<ul class="simple">
+<li><p><strong>Translation</strong>: Moving the image</p></li>
+<li><p><strong>Rotation</strong>: Rotating the image</p></li>
+<li><p><strong>Scaling</strong>: Uniform scaling</p></li>
+<li><p><strong>Shearing</strong>: Limited non-uniform deformation</p></li>
+</ul>
+</section>
+<section id="quality-assessment">
+<h3>Quality Assessment<a class="headerlink" href="#quality-assessment" title="Link to this heading"></a></h3>
+<p>Registration quality can be assessed using multiple metrics:</p>
+<dl class="simple">
+<dt><strong>Geometric Overlap:</strong></dt><dd><ul class="simple">
+<li><p>IoU (Intersection over Union)</p></li>
+<li><p>Logical AND, OR, XOR operations</p></li>
+<li><p>Coverage percentages</p></li>
+</ul>
+</dd>
+<dt><strong>Intensity Correlation:</strong></dt><dd><ul class="simple">
+<li><p>Pearson correlation of registered channels</p></li>
+<li><p>Multi-channel correlation matrices</p></li>
+<li><p>Channel-specific correlations</p></li>
+</ul>
+</dd>
+<dt><strong>Spatial Consistency:</strong></dt><dd><ul class="simple">
+<li><p>Feature distribution similarity</p></li>
+<li><p>Registration matrix properties</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="parameter-optimization-defaults">
+<h2>Parameter Optimization (Defaults)<a class="headerlink" href="#parameter-optimization-defaults" title="Link to this heading"></a></h2>
+<p>Twocan optimizes parameters across several categories:</p>
+<section id="preprocessing-parameters">
+<h3>Preprocessing Parameters<a class="headerlink" href="#preprocessing-parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt><strong>IF Processing:</strong></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">binarization_threshold</span></code>: Threshold for creating binary masks</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gaussian_sigma</span></code>: Amount of blurring for noise reduction</p></li>
+</ul>
+</dd>
+<dt><strong>IMC Processing:</strong></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">arcsinh_cofactor</span></code>: Scaling factor for arcsinh transformation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">winsorization_limits</span></code>: Percentiles for outlier clipping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binarization_threshold</span></code>: Threshold for binary masks</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gaussian_sigma</span></code>: Blurring parameter</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="registration-parameters">
+<h3>Registration Parameters<a class="headerlink" href="#registration-parameters" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code>: Maximum ORB features to detect</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">percentile</span></code>: Fraction of best matches to keep</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">registration_target</span></code>: Which image serves as the reference</p></li>
+</ul>
+</section>
+</section>
+<section id="objective-functions">
+<h2>Objective Functions<a class="headerlink" href="#objective-functions" title="Link to this heading"></a></h2>
+<p>Twocan provides different objective functions for optimization:</p>
+<section id="multi-objective">
+<h3>Multi Objective<a class="headerlink" href="#multi-objective" title="Link to this heading"></a></h3>
+<p>Treats different metrics as separate objectives for optimization:</p>
+<ul class="simple">
+<li><p><strong>Objective 1</strong>: Geometric overlap (IoU) of thresholded pixels</p></li>
+<li><p><strong>Objective 2</strong>: Cross-modality correlation in the intersection of thresholded pixels</p></li>
+</ul>
+</section>
+<section id="single-objective">
+<h3>Single Objective<a class="headerlink" href="#single-objective" title="Link to this heading"></a></h3>
+<p>Optimizes the product of the two metrics:</p>
+<div class="math notranslate nohighlight">
+\[\text{objective} =  \text{Cell IoU} \cdot \text{Cell correlation}\]</div>
+</section>
+<section id="custom-objectives">
+<h3>Custom Objectives<a class="headerlink" href="#custom-objectives" title="Link to this heading"></a></h3>
+<p>You can define custom objective functions for specific use cases:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">custom_objective</span><span class="p">(</span><span class="n">trial</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># Your custom registration logic</span>
+    <span class="c1"># Return single value or list of values</span>
+    <span class="k">return</span> <span class="n">registration_score</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="when-to-use-twocan">
+<h2>When to Use Twocan<a class="headerlink" href="#when-to-use-twocan" title="Link to this heading"></a></h2>
+<p>Twocan is particularly useful when:</p>
+<ul class="simple">
+<li><p><strong>Multiple modalities</strong> need registration, especially from highly multiplexed omics technologies</p></li>
+<li><p><strong>Manual parameter tuning</strong> is impractical</p></li>
+<li><p><strong>Registration quality</strong> is critical for downstream analysis</p></li>
+<li><p><strong>Reproducible results</strong> are required</p></li>
+</ul>
+<p>Twocan may not be the best choice when:</p>
+<ul class="simple">
+<li><p><strong>Very large images</strong> exceed memory constraints</p></li>
+</ul>
+</section>
+<section id="limitations-and-considerations">
+<h2>Limitations and Considerations<a class="headerlink" href="#limitations-and-considerations" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><strong>Computational Cost:</strong></dt><dd><p>Bayesian optimization requires multiple registration attempts, making it slower than single-shot methods.</p>
+</dd>
+<dt><strong>Memory Requirements:</strong></dt><dd><p>Large images and multiple channels can require substantial memory.</p>
+</dd>
+<dt><strong>Feature-based Approach:</strong></dt><dd><p>Requires detectable features; may struggle with very smooth or homogeneous images.</p>
+</dd>
+<dt><strong>Affine Transformation Model:</strong></dt><dd><p>Cannot handle complex non-linear deformations that might occur in some biological samples.</p>
+</dd>
+<dt><strong>Channel Selection:</strong></dt><dd><p>Registration quality depends heavily on choosing appropriate channels that are present in both modalities.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorials/index.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

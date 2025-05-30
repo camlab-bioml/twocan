@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>twocan.base &mdash; Twocan 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Twocan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Core Concepts</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Twocan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">twocan.base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for twocan.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core registration estimator for Twocan multimodal image registration.</span>
+
+<span class="sd">This module implements the main RegEstimator class, which provides a </span>
+<span class="sd">scikit-learn compatible interface for feature-based image registration </span>
+<span class="sd">using OpenCV&#39;s ORB detector and affine transformation estimation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">transform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">stretch_255</span>
+
+<div class="viewcode-block" id="RegEstimator">
+<a class="viewcode-back" href="../../api/index.html#twocan.RegEstimator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegEstimator</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A scikit-learn compatible estimator for multimodal image registration.</span>
+<span class="sd">    </span>
+<span class="sd">    This class implements feature-based image registration using OpenCV&#39;s ORB </span>
+<span class="sd">    (Oriented FAST and Rotated BRIEF) detector and a partial affine transformation </span>
+<span class="sd">    model. It follows scikit-learn&#39;s estimator API with fit, transform, and </span>
+<span class="sd">    fit_transform methods, making it easy to integrate into machine learning pipelines.</span>
+<span class="sd">    </span>
+<span class="sd">    The registration process consists of:</span>
+<span class="sd">    1. Feature detection using ORB on both images</span>
+<span class="sd">    2. Feature matching using brute-force Hamming distance</span>
+<span class="sd">    3. Affine transformation estimation using RANSAC</span>
+<span class="sd">    4. Image transformation using the estimated parameters</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    registration_max_features : int, default=10000</span>
+<span class="sd">        Maximum number of features to detect in each image using ORB.</span>
+<span class="sd">        Higher values can improve registration accuracy but increase computation time.</span>
+<span class="sd">    registration_percentile : float, default=0.9</span>
+<span class="sd">        Percentile of features to keep after sorting by match quality (0-1).</span>
+<span class="sd">        Only the top percentile of matches by distance are used for transformation</span>
+<span class="sd">        estimation, which helps remove outliers.</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M_ : np.ndarray</span>
+<span class="sd">        The estimated 2x3 affine transformation matrix after fitting.</span>
+<span class="sd">        Shape is (2, 3) representing the transformation [R|t] where R is</span>
+<span class="sd">        rotation/scaling and t is translation.</span>
+<span class="sd">    y_shape_ : Tuple[int, int]</span>
+<span class="sd">        Shape (height, width) of the target image used during fitting.</span>
+<span class="sd">        Used as the default output shape for transformations.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The estimator automatically converts input images to 8-bit grayscale for</span>
+<span class="sd">    feature detection using the stretch_255 utility function. This ensures</span>
+<span class="sd">    consistent feature detection regardless of input image dynamic range.</span>
+<span class="sd">    </span>
+<span class="sd">    The partial affine transformation model allows rotation, scaling, and </span>
+<span class="sd">    translation but not shearing, which is appropriate for most microscopy</span>
+<span class="sd">    registration tasks where imaging geometry is approximately preserved.</span>
+<span class="sd">    </span>
+<span class="sd">    For best results:</span>
+<span class="sd">    - Ensure sufficient overlap between images</span>
+<span class="sd">    - Use images with distinct features (not uniform regions)</span>
+<span class="sd">    - Consider preprocessing to enhance relevant structures</span>
+<span class="sd">    - Adjust max_features based on image complexity and computational budget</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registration_max_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">registration_percentile</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registration_max_features</span> <span class="o">=</span> <span class="n">registration_max_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registration_percentile</span> <span class="o">=</span> <span class="n">registration_percentile</span>
+    
+<div class="viewcode-block" id="RegEstimator.fit">
+<a class="viewcode-back" href="../../api/index.html#twocan.RegEstimator.fit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;RegEstimator&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimate the affine transformation matrix between source (X) and target (y) images.</span>
+<span class="sd">        </span>
+<span class="sd">        This method detects features in both images using ORB, matches them, and</span>
+<span class="sd">        estimates the best affine transformation that maps source features to</span>
+<span class="sd">        target features using OpenCV&#39;s robust estimation.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : np.ndarray</span>
+<span class="sd">            Source image to be registered. Shape can be (H, W) for single-channel</span>
+<span class="sd">            or (C, H, W) for multi-channel. If multi-channel, all channels are</span>
+<span class="sd">            summed for feature detection.</span>
+<span class="sd">        y : np.ndarray</span>
+<span class="sd">            Target (reference) image to register to. Shape can be (H, W) for </span>
+<span class="sd">            single-channel or (C, H, W) for multi-channel. If multi-channel,</span>
+<span class="sd">            all channels are summed for feature detection.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : RegEstimator</span>
+<span class="sd">            The fitted estimator with estimated transformation matrix in ``self.M_``.</span>
+<span class="sd">            </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        cv2.error</span>
+<span class="sd">            If affine transformation cannot be estimated, typically due to</span>
+<span class="sd">            insufficient or poorly matched features.</span>
+<span class="sd">            </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The fitting process:</span>
+<span class="sd">        1. Convert images to 8-bit for ORB compatibility</span>
+<span class="sd">        2. Detect up to max_features keypoints in each image</span>
+<span class="sd">        3. Compute ORB descriptors for each keypoint</span>
+<span class="sd">        4. Match descriptors using brute-force Hamming distance</span>
+<span class="sd">        5. Keep top percentile of matches by distance</span>
+<span class="sd">        6. Estimate partial affine transformation using RANSAC</span>
+<span class="sd">        </span>
+<span class="sd">        The method uses OpenCV&#39;s estimateAffinePartial2D which finds the optimal</span>
+<span class="sd">        similarity transformation (rotation, scaling, translation) rather than</span>
+<span class="sd">        a full affine transformation. This is more robust for most registration</span>
+<span class="sd">        scenarios.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">stretch_255</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">stretch_255</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="c1"># orb detector</span>
+        <span class="n">orb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ORB_create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">registration_max_features</span><span class="p">,</span> <span class="n">fastThreshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">edgeThreshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">kpsA</span><span class="p">,</span> <span class="n">descsA</span><span class="p">)</span> <span class="o">=</span> <span class="n">orb</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">kpsB</span><span class="p">,</span> <span class="n">descsB</span><span class="p">)</span> <span class="o">=</span> <span class="n">orb</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># match the features</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">DESCRIPTOR_MATCHER_BRUTEFORCE_HAMMING</span>
+        <span class="n">matcher</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">DescriptorMatcher_create</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">descsA</span><span class="p">,</span> <span class="n">descsB</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># sort the matches by their distance (the smaller the distance, the &quot;more similar&quot; the features are)</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">distance</span><span class="p">)</span>
+        <span class="c1"># keep only the top percentile matches</span>
+        <span class="n">keep</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">registration_percentile</span><span class="p">)</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[:</span><span class="n">keep</span><span class="p">]</span>
+        <span class="n">ptsA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">kpsA</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">queryIdx</span><span class="p">]</span><span class="o">.</span><span class="n">pt</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">])</span>
+        <span class="n">ptsB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">kpsB</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">trainIdx</span><span class="p">]</span><span class="o">.</span><span class="n">pt</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">])</span>
+        <span class="c1"># register</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">_mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">estimateAffinePartial2D</span><span class="p">(</span><span class="n">ptsA</span><span class="p">,</span> <span class="n">ptsB</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M_</span> <span class="o">=</span> <span class="n">M</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_shape_</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    
+<div class="viewcode-block" id="RegEstimator.transform">
+<a class="viewcode-back" href="../../api/index.html#twocan.RegEstimator.transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply the estimated transformation to the source image(s).</span>
+<span class="sd">        </span>
+<span class="sd">        This method transforms the source image(s) using the affine transformation</span>
+<span class="sd">        estimated during fitting. Optionally, a target image can be provided which</span>
+<span class="sd">        will be stacked with the transformed source without transformation.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : np.ndarray</span>
+<span class="sd">            Source image(s) to transform. Shape can be (H, W) for single-channel</span>
+<span class="sd">            or (C, H, W) for multi-channel. All channels are transformed using</span>
+<span class="sd">            the same transformation matrix.</span>
+<span class="sd">        y : Optional[np.ndarray], default=None</span>
+<span class="sd">            Target image to stack with transformed source. If provided, this image</span>
+<span class="sd">            is NOT transformed but is included in the output for direct comparison.</span>
+<span class="sd">            Shape should be (H, W) or (C, H, W).</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Transformed image(s). If y is None, returns transformed X with shape</span>
+<span class="sd">            (C, H_out, W_out) where H_out, W_out match the target image from fitting.</span>
+<span class="sd">            If y is provided, returns stacked array with transformed X channels</span>
+<span class="sd">            followed by untransformed y channels.</span>
+<span class="sd">            </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotFittedError</span>
+<span class="sd">            If transform is called before fitting the estimator.</span>
+<span class="sd">        AssertionError</span>
+<span class="sd">            If the stored transformation matrix has invalid shape.</span>
+<span class="sd">            </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The transformation uses scikit-image&#39;s warp function with the inverse</span>
+<span class="sd">        transformation matrix. This ensures proper interpolation and handles</span>
+<span class="sd">        edge cases automatically.</span>
+<span class="sd">        </span>
+<span class="sd">        Output image dimensions match the target image used during fitting</span>
+<span class="sd">        unless a different y image is provided during transformation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span> <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="kc">None</span><span class="p">,:,:]</span>
+        <span class="n">y_shape</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">AffineTransform</span><span class="p">(</span><span class="n">matrix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">M_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])]))</span>
+        <span class="n">X_mv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">transform</span><span class="o">.</span><span class="n">warp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">inverse_map</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">inverse</span><span class="p">,</span> <span class="n">output_shape</span><span class="o">=</span><span class="p">(</span><span class="n">y_shape</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_shape_</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">X_mv</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span> <span class="n">X_mv</span> <span class="o">=</span> <span class="n">X_mv</span><span class="p">[</span><span class="kc">None</span><span class="p">,:,:]</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="kc">None</span><span class="p">,:,:]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_mv</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">X_mv</span></div>
+
+
+<div class="viewcode-block" id="RegEstimator.fit_transform">
+<a class="viewcode-back" href="../../api/index.html#twocan.RegEstimator.fit_transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit to data, then transform it.</span>
+<span class="sd">        </span>
+<span class="sd">        This convenience method combines fitting and transformation in a single</span>
+<span class="sd">        call. It&#39;s equivalent to calling fit(X, y).transform(X, y) but slightly</span>
+<span class="sd">        more efficient.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : np.ndarray</span>
+<span class="sd">            Source image to fit the transformation to and then transform.</span>
+<span class="sd">        y : np.ndarray</span>
+<span class="sd">            Target image to fit the transformation against. This image will</span>
+<span class="sd">            also be included in the output stack.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Stacked array containing the transformed X channels followed by</span>
+<span class="sd">            the original y channels. Shape is (C_x + C_y, H_y, W_y) where</span>
+<span class="sd">            C_x, C_y are the channel counts and H_y, W_y are target dimensions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="RegEstimator.score">
+<a class="viewcode-back" href="../../api/index.html#twocan.RegEstimator.score">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate registration quality metrics between source and target images.</span>
+<span class="sd">        </span>
+<span class="sd">        This method computes various metrics to assess the quality of registration</span>
+<span class="sd">        between binary or continuous-valued images. Metrics are calculated only</span>
+<span class="sd">        in regions where both images have valid data after transformation.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source : np.ndarray</span>
+<span class="sd">            Source image, shape (H, W). Should be the same image used for fitting</span>
+<span class="sd">            or a similar image from the same modality.</span>
+<span class="sd">        target : np.ndarray</span>
+<span class="sd">            Target image, shape (H, W). Should be the same image used for fitting</span>
+<span class="sd">            or a similar image from the same modality.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict[str, float]</span>
+<span class="sd">            Dictionary containing registration quality metrics:</span>
+<span class="sd">            </span>
+<span class="sd">            - &#39;and&#39; : float</span>
+<span class="sd">                Count of pixels where both source and target are positive</span>
+<span class="sd">                (logical AND operation). Higher values indicate better overlap.</span>
+<span class="sd">            - &#39;or&#39; : float</span>
+<span class="sd">                Count of pixels where either source or target is positive</span>
+<span class="sd">                (logical OR operation). </span>
+<span class="sd">            - &#39;xor&#39; : float</span>
+<span class="sd">                Count of pixels where source and target disagree</span>
+<span class="sd">                (logical XOR operation). Lower values indicate better agreement.</span>
+<span class="sd">            - &#39;iou&#39; : float</span>
+<span class="sd">                Intersection over Union ratio (and/or). Values range from 0-1</span>
+<span class="sd">                with 1 indicating perfect overlap. Returns 0.0 if no positive pixels exist.</span>
+<span class="sd">            - &#39;source_sum&#39; : float</span>
+<span class="sd">                Sum of all source pixel intensities in the overlap region.</span>
+<span class="sd">            - &#39;target_sum&#39; : float</span>
+<span class="sd">                Sum of all target pixel intensities in the overlap region.</span>
+<span class="sd">                </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Metrics are computed only in the intersection region where both images</span>
+<span class="sd">        have valid data after transformation. This ensures fair comparison and</span>
+<span class="sd">        avoids edge effects from the transformation.</span>
+<span class="sd">        </span>
+<span class="sd">        For binary images, the metrics have intuitive interpretations:</span>
+<span class="sd">        - IoU is the standard Jaccard index</span>
+<span class="sd">        - &#39;and&#39; counts overlapping positive pixels</span>
+<span class="sd">        - &#39;xor&#39; counts disagreement pixels</span>
+<span class="sd">        </span>
+<span class="sd">        For continuous images, the logical operations are applied after</span>
+<span class="sd">        implicit conversion to boolean (non-zero values are True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">source</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">target</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">source</span><span class="p">,</span><span class="n">target</span><span class="p">)</span>
+        <span class="c1"># restrict to shared area of union </span>
+        <span class="n">source_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">target_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">stack_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">source_mask</span><span class="p">,</span><span class="n">target_mask</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">1</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[:,</span><span class="n">stack_mask</span><span class="p">]</span>
+        
+        <span class="c1"># Calculate logical operations</span>
+        <span class="n">logical_and</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stack</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">logical_or</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stack</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">logical_xor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stack</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="n">and_sum</span> <span class="o">=</span> <span class="n">logical_and</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">or_sum</span> <span class="o">=</span> <span class="n">logical_or</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">xor_sum</span> <span class="o">=</span> <span class="n">logical_xor</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        
+        <span class="c1"># Handle divide by zero case for IoU</span>
+        <span class="n">iou</span> <span class="o">=</span> <span class="p">(</span><span class="n">and_sum</span> <span class="o">/</span> <span class="n">or_sum</span><span class="p">)</span> <span class="k">if</span> <span class="n">or_sum</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        
+        <span class="k">return</span><span class="p">({</span>
+            <span class="s1">&#39;and&#39;</span><span class="p">:</span> <span class="n">and_sum</span><span class="p">,</span>
+            <span class="s1">&#39;or&#39;</span><span class="p">:</span> <span class="n">or_sum</span><span class="p">,</span>
+            <span class="s1">&#39;xor&#39;</span><span class="p">:</span> <span class="n">xor_sum</span><span class="p">,</span>
+            <span class="s1">&#39;iou&#39;</span><span class="p">:</span> <span class="n">iou</span><span class="p">,</span>
+            <span class="s1">&#39;source_sum&#39;</span><span class="p">:</span> <span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
+            <span class="s1">&#39;target_sum&#39;</span><span class="p">:</span> <span class="n">stack</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="p">})</span></div>
+</div>
+
+    
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caitlin F. Harrigan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+Quickstart: Basic Registration
+==============================
+
+This tutorial provides a complete introduction to Twocan with a hands-on example of registering IF and IMC images.
+
+**What you'll learn:**
+- Basic Twocan workflow from data loading to registration
+- How to set up Bayesian optimization with Optuna
+- Understanding registration quality metrics
+- Visualizing registration results
+
+**Prerequisites:**
+- Basic Python knowledge
+- Familiarity with Jupyter notebooks
+- Understanding of image registration concepts (helpful but not required)
+
+**Data:**
+This tutorial uses example IF and IMC data from the same tissue section.
+
+.. toctree::
+   :maxdepth: 1
+   ../../notebooks/01_basic_registration.ipynb
+
