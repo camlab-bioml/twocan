@@ -57,9 +57,3 @@ Check out the `notebooks/` directory for comprehensive examples:
 ## License
 
 This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-- 📖 **Documentation**: [twocan.readthedocs.io](https://twocan.readthedocs.io/)
-- 📧 **Contact**: kierancampbell@lunenfeld.ca
-- 🐛 **Issues**: [GitHub Issues](https://github.com/camlab-bioml/twocan/issues)
