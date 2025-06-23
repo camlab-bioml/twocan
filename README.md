@@ -54,6 +54,20 @@ Check out the `notebooks/` directory for comprehensive examples:
 - Saving and loading registration results
 
 
-## License
+## Citation
 
-This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License - see the [LICENSE](LICENSE) file for details.
+```
+@misc{harrigan_automated_2025,
+	title = {Automated registration of spatial expression data scales multimodal integration to large cohorts},
+	copyright = {© 2025, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution-NonCommercial 4.0 International), CC BY-NC 4.0, as described at http://creativecommons.org/licenses/by-nc/4.0/},
+	url = {https://www.biorxiv.org/content/10.1101/2025.05.29.656851v1},
+	doi = {10.1101/2025.05.29.656851},
+	language = {en},
+	urldate = {2025-06-06},
+	publisher = {bioRxiv},
+	author = {Harrigan, Caitlin F. and Lam, Ching Yeung and Chen, Danian and Lai, Christian and Bremner, Rod and Jackson, Hartland W. and Campbell, Kieran R.},
+	month = jun,
+	year = {2025},
+}
+```
+
