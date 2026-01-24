@@ -13,3 +13,5 @@ examples/01_imc_if/*log
 examples/01_imc_if/.snakemake/*
 examples/02_imc_fish/data/*
 examples/03_ims_imc/data/*
+examples/
+.ipynb_checkpoints

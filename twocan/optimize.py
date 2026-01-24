@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
-from .utils import IFProcessor, IMCProcessor, multi_channel_corr
+from .preprocessor_templates import IFProcessor, IMCProcessor
+from .utils import multi_channel_corr
 from .base import RegEstimator
 
 def registration_trial(

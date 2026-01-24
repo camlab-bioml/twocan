@@ -21,8 +21,9 @@ from .callbacks import SaveTrialsDFCallback, ThresholdReachedCallback, MatrixCon
 from .plotting import plot_cartoon_affine, get_merge, get_rectangle_area, AsinhNorm
 from .utils import (
     stretch_255, read_M, multi_channel_corr, 
-    IFProcessor, IMCProcessor, get_aligned_coordinates, prep_zarr, pick_best_registration
+    get_aligned_coordinates, prep_zarr, pick_best_registration
 )
+from .preprocessor_templates import IFProcessor, IMCProcessor
 from .optimize import registration_trial, iou_corr_single_objective, iou_corr_multi_objective
 
 __version__ = "0.1.2"

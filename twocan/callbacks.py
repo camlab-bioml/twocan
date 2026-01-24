@@ -174,8 +174,8 @@ class MatrixConvergenceCallback:
             When matrix convergence is detected.
         """
         # Extract transformation matrix if available
-        if 'M' in trial.user_attrs:
-            matrix = trial.user_attrs['M']
+        if 'registration_matrix' in trial.user_attrs:
+            matrix = trial.user_attrs['registration_matrix']
             self.matrices.append(matrix)
             
             # Keep only recent matrices

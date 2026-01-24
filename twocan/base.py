@@ -70,6 +70,11 @@ class RegEstimator(TransformerMixin, BaseEstimator, ABC):
         self.registration_max_features = registration_max_features
         self.registration_percentile = registration_percentile
     
+
+    def set_M(self, M: np.ndarray) -> 'RegEstimator':
+        self.M_ = M
+        return self
+        
     def fit(self, X: np.ndarray, y: np.ndarray) -> 'RegEstimator':
         """Estimate the affine transformation matrix between source (X) and target (y) images.
         

@@ -65,7 +65,7 @@ def get_rectangle_area(w1: float, h1: float, M: np.ndarray) -> Tuple[float, floa
     return area, x_length, y_length
 
 
-def plot_registration(im1, im2, M):
+def plot_registration(im1, im2, M, ax=None):
     """Plot a cartoon representation of an affine transformation.
     
     Visualizes how a rectangle is transformed by an affine matrix, useful for
@@ -76,7 +76,7 @@ def plot_registration(im1, im2, M):
     """
     w1, h1 = im1.shape[-2:]
     w2, h2 = im2.shape[-2:]
-    return plot_cartoon_affine(w1, h1, M, w2, h2, ax=None, show_source=False, source_color='#37c100', target_color='#cc008b')
+    return plot_cartoon_affine(w1, h1, M, w2, h2, ax=ax, show_source=False, source_color='#37c100', target_color='#cc008b')
 
 def plot_cartoon_affine(w1: float, h1: float, M: np.ndarray, w2: float, h2: float, 
                        ax: Optional[Axes] = None, show_source: bool = False, 
@@ -129,7 +129,7 @@ def plot_cartoon_affine(w1: float, h1: float, M: np.ndarray, w2: float, h2: floa
                         color=target_color, label='Target')[0])
     
     ax.set_aspect('equal')
-    ax.set_title(f'Transformed area: {area:.2f}')
+    #ax.set_title(f'Transformed area: {area:.2f}')
     
     return ax, lines
 
