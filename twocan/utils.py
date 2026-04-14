@@ -16,8 +16,7 @@ from scipy.stats.mstats import winsorize
 import numpy as np
 from typing import List
 import spatialdata as sd
-from spatialdata.transformations import get_transformation, set_transformation
-from spatialdata.transformations.transformations import BaseTransformation, Sequence
+from spatialdata.transformations import get_transformation, set_transformation, BaseTransformation, Sequence, Scale
 import pandas as pd
 
 
@@ -42,6 +41,10 @@ def stretch_255(image: np.ndarray) -> np.ndarray:
     if image.max() == 0: return image
     return (image * (255/image.max())).astype('uint8')
 
+def rescale_image(image: np.ndarray, scale: float, interpolation= cv2.INTER_LANCZOS4) -> np.ndarray:
+    assert image.ndim == 3
+    assert interpolation in [cv2.INTER_LANCZOS4, cv2.INTER_LINEAR, cv2.INTER_CUBIC, cv2.INTER_NEAREST]
+    return np.array([cv2.resize(image[i], (int(image.shape[2]*scale), int(image.shape[1]*scale)), interpolation=interpolation) for i in range(image.shape[0])])
 
 
 
@@ -206,6 +209,16 @@ def multi_channel_corr(source: np.ndarray, target: np.ndarray) -> np.ndarray:
     # Calculate correlation matrix using matrix multiplication
     return np.dot(source, target.T) / source.shape[1]
 
+def get_max_corr(stack, mask, n_channels):
+        corr_matrix = multi_channel_corr(
+            stack[:,mask][:n_channels], 
+            stack[:,mask][n_channels:]
+        )
+        if np.all(np.isnan(corr_matrix)):
+            return np.nan
+        else:
+            return np.nanmax(corr_matrix)
+
 
 def pick_best_registration(study_df):
     """Calculate triangle score and return best trial from optimization results.
@@ -251,9 +264,11 @@ def pick_best_registration(study_df):
     study_df['norm_and'] = (np.log10(study_df['user_attrs_logical_and']+1)) / (np.log10(study_df['user_attrs_logical_and']+1).max())
     study_df['norm_iou'] = study_df['user_attrs_logical_iou'] / study_df['user_attrs_logical_iou'].max()
     study_df['norm_corr'] = study_df['user_attrs_reg_image_max_corr'] / study_df['user_attrs_reg_image_max_corr'].max()
-    study_df['balanced_score'] = 1/3 * abs(study_df['norm_and'] * study_df['norm_corr'] + 
-                                        study_df['norm_corr'] * study_df['norm_iou'] + 
-                                        study_df['norm_iou'] * study_df['norm_and'])
+    study_df['balanced_score'] = abs(study_df['norm_and'] * study_df['norm_corr'] +  study_df['norm_corr'] * study_df['norm_iou'] +  study_df['norm_iou'] * study_df['norm_and'])
     # Get the row with maximum triangle score
-    best_row = study_df.loc[study_df['balanced_score'].idxmax()]
-    return best_row
+    idx = study_df['balanced_score'].idxmax(skipna=True)
+    if np.isnan(idx):
+        return None
+    else:
+        best_row = study_df.loc[idx]
+        return best_row

@@ -20,7 +20,7 @@ from .base import RegEstimator
 from .callbacks import SaveTrialsDFCallback, ThresholdReachedCallback, MatrixConvergenceCallback
 from .plotting import plot_cartoon_affine, get_merge, get_rectangle_area, AsinhNorm
 from .utils import (
-    stretch_255, read_M, multi_channel_corr, 
+    stretch_255, read_M, multi_channel_corr, get_max_corr,
     get_aligned_coordinates, prep_zarr, pick_best_registration
 )
 from .preprocessor_templates import IFProcessor, IMCProcessor
@@ -38,9 +38,11 @@ __all__ = [
     "registration_trial",
     "iou_corr_single_objective", 
     "iou_corr_multi_objective",
+    "get_max_corr",
     "SaveTrialsDFCallback",
     "ThresholdReachedCallback",
     "MatrixConvergenceCallback", 
     "plot_cartoon_affine",
+    "plot_registration",
     "AsinhNorm",
 ] 

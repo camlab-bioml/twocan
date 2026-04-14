@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from .preprocessor_templates import IFProcessor, IMCProcessor
-from .utils import multi_channel_corr
+from .utils import multi_channel_corr, get_max_corr
 from .base import RegEstimator
 
 def registration_trial(
@@ -89,16 +89,7 @@ def registration_trial(
         [trial.set_user_attr(k, np.NaN) for k in df_na_list]
         return 
     
-    def get_max_corr(stack, mask, n_channels):
-        corr_matrix = multi_channel_corr(
-            stack[:,mask][:n_channels], 
-            stack[:,mask][n_channels:]
-        )
-        if np.all(np.isnan(corr_matrix)):
-            return np.nan
-        else:
-            return np.nanmax(corr_matrix)
-
+    
     # Image intersection correlations
     mask = reg.transform(np.ones(source_processed.shape), np.ones(target_processed.shape)).sum(0) > 1
     stack_image_max_corr = get_max_corr(stack, mask, source.shape[0])
