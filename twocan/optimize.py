@@ -135,3 +135,12 @@ def iou_corr_multi_objective(
         return 0, 0
     return trial.user_attrs['reg_image_max_corr'], trial.user_attrs['logical_iou']
 
+def corr_single_objective(
+    trial, images, registration_channels, 
+    moving_image='IMC', static_image='IF', 
+    moving_preprocesser=IMCProcessor(), static_preprocesser=IFProcessor()):
+    """Objective function that optimizes for IoU (Intersection over Union)."""
+    registration_trial(trial, images, registration_channels, moving_image, static_image, moving_preprocesser, static_preprocesser)
+    if np.isnan(trial.user_attrs['reg_image_max_corr']):
+        return 0
+    return trial.user_attrs['reg_image_max_corr']

@@ -24,7 +24,7 @@ from .utils import (
     get_aligned_coordinates, prep_zarr, pick_best_registration
 )
 from .preprocessor_templates import IFProcessor, IMCProcessor
-from .optimize import registration_trial, iou_corr_single_objective, iou_corr_multi_objective
+from .optimize import registration_trial, iou_corr_single_objective, iou_corr_multi_objective, corr_single_objective
 
 __version__ = "0.1.2"
 

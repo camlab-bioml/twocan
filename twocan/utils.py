@@ -266,9 +266,9 @@ def pick_best_registration(study_df):
     study_df['norm_corr'] = study_df['user_attrs_reg_image_max_corr'] / study_df['user_attrs_reg_image_max_corr'].max()
     study_df['balanced_score'] = abs(study_df['norm_and'] * study_df['norm_corr'] +  study_df['norm_corr'] * study_df['norm_iou'] +  study_df['norm_iou'] * study_df['norm_and'])
     # Get the row with maximum triangle score
-    idx = study_df['balanced_score'].idxmax(skipna=True)
-    if np.isnan(idx):
+    if study_df['balanced_score'].isna().all():
         return None
     else:
+        idx = study_df['balanced_score'].idxmax(skipna=True)
         best_row = study_df.loc[idx]
         return best_row
